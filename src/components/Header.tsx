@@ -1,6 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import { useAdminConfig } from '../context/AdminConfigContext';
 import { getAssetUrl } from '../utils/assetUrl';
+import { User as UserIcon, RotateCw } from 'lucide-react';
 
 interface HeaderProps {
   onOpenAuth: (mode: 'login' | 'signup') => void;
@@ -19,7 +20,7 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab, onOpenBe
 
   return (
     <header className="s11-header">
-      {/* Brand Logo - exact downloaded live logo */}
+      {/* Brand Logo */}
       <div
         className="s11-header__logo"
         onClick={() => onNavigateTab && onNavigateTab('home')}
@@ -43,16 +44,8 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab, onOpenBe
         <button
           type="button"
           onClick={onToggleLang}
-          style={{
-            background: 'rgba(255, 255, 255, 0.08)',
-            border: 'none',
-            borderRadius: '0.2rem',
-            padding: '0.1rem 0.2rem',
-            color: '#fff',
-            fontSize: '0.28rem',
-            fontWeight: 600,
-            cursor: 'pointer'
-          }}
+          className="s11-header__lang-btn"
+          aria-label="Toggle language"
         >
           {lang === 'en' ? 'EN' : 'हि'}
         </button>
@@ -73,7 +66,7 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab, onOpenBe
           />
         </button>
 
-        {/* Guest or User actions */}
+        {/* Guest vs Logged In Actions */}
         {!user ? (
           <div className="s11-header__auth-btns">
             <button
@@ -92,21 +85,47 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab, onOpenBe
             </button>
           </div>
         ) : (
-          <div
-            onClick={() => onNavigateTab && onNavigateTab('mine')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.16rem',
-              cursor: 'pointer',
-              background: 'rgba(255,255,255,0.06)',
-              padding: '0.08rem 0.2rem',
-              borderRadius: '0.3rem'
-            }}
-          >
-            <span style={{ fontSize: '0.32rem', fontWeight: 700, color: 'var(--main_color, #F97316)' }}>
-              ₹ {balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </span>
+          <div className="s11-header__user-bar">
+            {/* Wallet Balance Pill with reload */}
+            <div
+              className="s11-header__balance-pill"
+              onClick={() => onNavigateTab && onNavigateTab('wallet')}
+              title="Click to view Wallet"
+            >
+              <span className="cur-sym">₹</span>
+              <span className="balance-txt">
+                {balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+              <RotateCw size={12} className="balance-reload-icon" />
+            </div>
+
+            {/* Quick Deposit Button */}
+            <button
+              type="button"
+              className="s11-header__btn-deposit"
+              onClick={() => onNavigateTab && onNavigateTab('deposit')}
+            >
+              Deposit
+            </button>
+
+            {/* Quick Withdraw Button */}
+            <button
+              type="button"
+              className="s11-header__btn-withdraw"
+              onClick={() => onNavigateTab && onNavigateTab('withdraw')}
+            >
+              Withdraw
+            </button>
+
+            {/* Profile Avatar Icon */}
+            <button
+              type="button"
+              className="s11-header__avatar-btn"
+              onClick={() => onNavigateTab && onNavigateTab('mine')}
+              title="Personal Center"
+            >
+              <UserIcon size={16} />
+            </button>
           </div>
         )}
       </div>

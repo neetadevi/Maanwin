@@ -16,7 +16,7 @@ import { WelcomeBonusModal } from './components/WelcomeBonusModal';
 import { AuthModal } from './components/AuthModal';
 import { GamePlayModal } from './components/GamePlayModal';
 import { AdminPanel } from './components/AdminPanel';
-import { ActivityView, PromotionView, WalletView, MineView } from './components/TabsContent';
+import { ActivityView, PromotionView, WalletView, MineView, DepositView, WithdrawView } from './components/TabsContent';
 import { CATEGORIES, type GameItem } from './data/gamesData';
 
 export default function App() {
@@ -155,10 +155,12 @@ export default function App() {
           </div>
         )}
 
-        {activeTab === 'activity' && <ActivityView onOpenAuth={openAuth} />}
-        {activeTab === 'promotion' && <PromotionView onOpenAuth={openAuth} />}
-        {activeTab === 'wallet' && <WalletView onOpenAuth={openAuth} />}
-        {activeTab === 'mine' && <MineView onOpenAuth={openAuth} />}
+        {activeTab === 'activity' && <ActivityView onOpenAuth={openAuth} onNavigateTab={(tab) => setActiveTab(tab)} />}
+        {activeTab === 'promotion' && <PromotionView onOpenAuth={openAuth} onNavigateTab={(tab) => setActiveTab(tab)} />}
+        {activeTab === 'wallet' && <WalletView onOpenAuth={openAuth} onNavigateTab={(tab) => setActiveTab(tab)} />}
+        {activeTab === 'deposit' && <DepositView onOpenAuth={openAuth} onNavigateTab={(tab) => setActiveTab(tab)} />}
+        {activeTab === 'withdraw' && <WithdrawView onOpenAuth={openAuth} onNavigateTab={(tab) => setActiveTab(tab)} />}
+        {activeTab === 'mine' && <MineView onOpenAuth={openAuth} onNavigateTab={(tab) => setActiveTab(tab)} />}
       </main>
 
       {/* Floating Customer Support Button */}

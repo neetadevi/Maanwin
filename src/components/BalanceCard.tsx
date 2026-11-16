@@ -55,14 +55,14 @@ export function BalanceCard({ onOpenAuth, onNavigateTab }: BalanceCardProps) {
             <button
               type="button"
               className="s11-balance__btn s11-balance__btn--primary"
-              onClick={() => onNavigateTab('wallet')}
+              onClick={() => onNavigateTab('deposit')}
             >
               Deposit
             </button>
             <button
               type="button"
               className="s11-balance__btn s11-balance__btn--secondary"
-              onClick={() => onNavigateTab('wallet')}
+              onClick={() => onNavigateTab('withdraw')}
             >
               Withdraw
             </button>
