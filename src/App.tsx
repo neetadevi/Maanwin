@@ -15,6 +15,8 @@ import { WinningSection } from './components/WinningSection';
 import { VendorsSection } from './components/VendorsSection';
 import { Footer } from './components/Footer';
 import { BottomNav } from './components/BottomNav';
+import { PwaBanner } from './components/PwaBanner';
+import { WelcomeBonusModal } from './components/WelcomeBonusModal';
 import { AuthModal } from './components/AuthModal';
 import { GamePlayModal } from './components/GamePlayModal';
 import { AdminPanel } from './components/AdminPanel';
@@ -186,6 +188,9 @@ export default function App() {
         </svg>
       </a>
 
+      {/* Floating Download App Banner */}
+      <PwaBanner />
+
       {/* Floating Bottom Dock Navigation */}
       <BottomNav
         activeTab={activeTab}
@@ -193,6 +198,9 @@ export default function App() {
         onOpenAuth={openAuth}
         isLoggedIn={!!user}
       />
+
+      {/* Welcome Bonus Modal (Get Free Spins & Bonus Alerts) */}
+      <WelcomeBonusModal onClaim={() => openAuth('signup')} />
 
       {/* Supabase Gmail ID + Password Auth Modal */}
       <AuthModal

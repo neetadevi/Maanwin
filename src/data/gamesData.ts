@@ -37,15 +37,15 @@ export interface BannerItem {
 export const BANNERS: BannerItem[] = [
   {
     id: 1,
-    img: getAssetUrl('img/6015/banner/123245682-142073-file_20260920123245625.webp'),
-    title: 'YOUR GAMING, OUR PRIORITY!',
-    subtitle: '24/7 SUPPORT · FAST SERVICE · EXCITING GAMES!'
-  },
-  {
-    id: 2,
     img: getAssetUrl('img/6015/banner/034552926-203051-file_20261023154552846.webp'),
     title: 'FIRST DEPOSIT BONUS 100%',
     subtitle: 'Deposit now and get up to ₹10,000 extra cash!'
+  },
+  {
+    id: 2,
+    img: getAssetUrl('img/6015/banner/123245682-142073-file_20260920123245625.webp'),
+    title: 'YOUR GAMING, OUR PRIORITY!',
+    subtitle: '24/7 SUPPORT · FAST SERVICE · EXCITING GAMES!'
   },
   {
     id: 3,

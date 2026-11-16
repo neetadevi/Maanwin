@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { getAssetUrl } from '../utils/assetUrl';
 
 interface BottomNavProps {
@@ -8,6 +9,24 @@ interface BottomNavProps {
 }
 
 export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: BottomNavProps) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const img = new Image();
+    img.src = getAssetUrl('images/s11_chest_anim-Bq793_Bz.webp');
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Source coords for closed glowing treasure chest:
+      // sx: 420, sy: 278, sWidth: 175, sHeight: 162
+      ctx.drawImage(img, 420, 278, 175, 162, 0, 0, canvas.width, canvas.height);
+    };
+  }, []);
+
   const handleTabClick = (key: string) => {
     if ((key === 'wallet' || key === 'mine') && !isLoggedIn) {
       onOpenAuth('login');
@@ -132,10 +151,12 @@ export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: Bo
             }
           }}
         >
-          <img
-            className="s11-tabbar__chest-anim"
-            src={getAssetUrl('images/s11_chest_anim-Bq793_Bz.webp')}
-            alt="Bonus Chest"
+          <canvas
+            ref={canvasRef}
+            className="chest-anim s11-tabbar__chest-anim"
+            width={149}
+            height={149}
+            style={{ width: '1.49rem', height: '1.49rem', display: 'block' }}
           />
         </button>
       </div>
