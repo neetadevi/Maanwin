@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Maanwin - India's Premier Online Gaming & Casino Platform</title>
+  <meta name="description" content="Experience premium online gaming on Maanwin. Aviator, Win Go Lottery, Slots, Live Casino, Sports Betting, and Instant 24/7 UPI Withdrawals." />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/logo/logo.webp" />
+  <link rel="apple-touch-icon" href="assets/logo/logo.webp" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Desktop Ambient Frame Wrapper -->
+  <div class="app-viewport">
+    
+    <!-- Top Header -->
+    <header class="site-header" id="mainHeader">
+      <div class="header-logo" id="logoBtn">
+        <img src="assets/logo/maanwin-logo.webp" alt="Maanwin" id="brandLogoImg" />
+      </div>
+
+      <div class="header-actions">
+        <!-- Language Switch -->
+        <button type="button" class="btn-lang" id="langToggleBtn" title="Toggle Language">EN</button>
+
+        <!-- Notification Bell -->
+        <button type="button" class="btn-bell" id="bellBtn" title="Notifications">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span class="bell-dot"></span>
+        </button>
+
+        <!-- Guest Auth Buttons (Logged Out State) -->
+        <div class="header-auth-group" id="headerGuestGroup">
+          <button type="button" class="btn-head-login" id="headLoginBtn">Log in</button>
+          <button type="button" class="btn-head-register" id="headRegisterBtn">Register</button>
+        </div>
+
+        <!-- User Controls (Logged In State) -->
+        <div class="header-user-group hidden" id="headerUserGroup">
+          <div class="header-balance-pill" id="headBalancePill" title="Wallet Balance">
+            <span class="pill-sym">₹</span>
+            <span class="pill-amt" id="headBalanceVal">0.00</span>
+            <svg class="reload-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
+          </div>
+          <button type="button" class="btn-head-deposit" id="headDepositBtn">Deposit</button>
+          <button type="button" class="btn-head-withdraw" id="headWithdrawBtn">Withdraw</button>
+          <div class="head-avatar-pill" id="headAvatarBtn" title="My Profile">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Tab Container -->
+    <main class="main-content" id="mainContainer">
+
+      <!-- ====================================================================
+           TAB 1: HOME VIEW
+           ==================================================================== -->
+      <section class="tab-pane active" id="paneHome">
+        
+        <!-- Balance / User Hero Section -->
+        <div class="user-hero-card">
+          <div class="hero-user-info">
+            <div class="user-avatar-circle" id="balanceAvatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <div class="user-balance-meta">
+              <span class="bal-label">Your Balance</span>
+              <div class="bal-amount-line">
+                <span class="cur-sign">₹</span>
+                <span class="bal-main" id="homeBalMain">0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-actions-row">
+            <!-- Guest buttons -->
+            <div class="hero-guest-btns" id="heroGuestBtns">
+              <button type="button" class="btn-hero-primary" id="heroRegisterBtn">Register</button>
+              <button type="button" class="btn-hero-secondary" id="heroLoginBtn">Login</button>
+            </div>
+            <!-- Logged in buttons -->
+            <div class="hero-user-btns hidden" id="heroUserBtns">
+              <button type="button" class="btn-hero-primary" id="heroDepositBtn">Deposit</button>
+              <button type="button" class="btn-hero-secondary" id="heroWithdrawBtn">Withdraw</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner Slider -->
+        <div class="banner-slider-container">
+          <div class="banner-track" id="bannerTrack">
+            <div class="banner-slide active">
+              <img src="assets/banners/banner1.webp" alt="First Deposit Bonus" class="banner-img" />
+            </div>
+            <div class="banner-slide">
+              <img src="assets/banners/banner2.webp" alt="Aviator Big Win" class="banner-img" />
+            </div>
+            <div class="banner-slide">
+              <img src="assets/banners/banner3.webp" alt="Daily Check-in Rewards" class="banner-img" />
+            </div>
+          </div>
+          <div class="slider-indicators" id="sliderDots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+
+        <!-- Marquee Announcement Notice Bar -->
+        <div class="marquee-notice-bar">
+          <div class="notice-icon-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          </div>
+          <div class="marquee-text-window">
+            <div class="marquee-scroller" id="marqueeText">
+              🔥 Welcome to Maanwin! First deposit gets 100% instant bonus up to ₹10,000! 24/7 fast UPI withdrawal available. Play responsibly 18+.
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Entry Cards (Daily Check-in & Lucky Wheel) -->
+        <div class="quick-entries-grid">
+          <div class="entry-card" id="entryDailyCheckin">
+            <div class="entry-badge-tag">DAILY</div>
+            <div class="entry-icon-holder checkin-bg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path><path d="m9 16 2 2 4-4"></path></svg>
+            </div>
+            <div class="entry-texts">
+              <span class="entry-title">Daily Check-in</span>
+              <span class="entry-sub">Get Free Cash Rain</span>
+            </div>
+          </div>
+
+          <div class="entry-card" id="entryLuckyWheel">
+            <div class="entry-badge-tag hot">WIN ₹10K</div>
+            <div class="entry-icon-holder wheel-bg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"></path><circle cx="12" cy="12" r="2"></circle></svg>
+            </div>
+            <div class="entry-texts">
+              <span class="entry-title">Lucky Spin Wheel</span>
+              <span class="entry-sub">Instant Gold Bonus</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Popular Games Horizontal Scroller -->
+        <div class="home-section popular-section">
+          <div class="section-head-row">
+            <div class="sec-left">
+              <span class="sec-accent-bar"></span>
+              <h3 class="sec-heading">Popular Games</h3>
+            </div>
+            <button type="button" class="sec-link-more" id="seeAllPopularBtn">See All →</button>
+          </div>
+
+          <div class="popular-games-scroller" id="popularGamesScroller">
+            <!-- Injected by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Category Lobby Navigation -->
+        <div class="category-lobby-section" id="lobbySection">
+          <div class="cat-nav-tabs" id="catNavTabs">
+            <button type="button" class="cat-tab active" data-cat="crash">
+              <span class="cat-icon-slot">🚀</span>
+              <span class="cat-name">Crash</span>
+            </button>
+            <button type="button" class="cat-tab" data-cat="lottery">
+              <span class="cat-icon-slot">🎯</span>
+              <span class="cat-name">Lottery</span>
+            </button>
+            <button type="button" class="cat-tab" data-cat="slots">
+              <span class="cat-icon-slot">🎰</span>
+              <span class="cat-name">Slots</span>
+            </button>
+            <button type="button" class="cat-tab" data-cat="sports">
+              <span class="cat-icon-slot">⚽</span>
+              <span class="cat-name">Sports</span>
+            </button>
+            <button type="button" class="cat-tab" data-cat="fishing">
+              <span class="cat-icon-slot">🎣</span>
+              <span class="cat-name">Fishing</span>
+            </button>
+            <button type="button" class="cat-tab" data-cat="casino">
+              <span class="cat-icon-slot">♠️</span>
+              <span class="cat-name">Casino</span>
+            </button>
+            <button type="button" class="cat-tab" data-cat="poker">
+              <span class="cat-icon-slot">🃏</span>
+              <span class="cat-name">Poker</span>
+            </button>
+          </div>
+
+          <!-- Dynamic Category Games Grid -->
+          <div class="category-games-grid" id="catGamesGrid">
+            <!-- Injected by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Featured Games Carousel Section -->
+        <div class="home-section featured-section">
+          <div class="section-head-row">
+            <div class="sec-left">
+              <span class="sec-accent-bar gold"></span>
+              <h3 class="sec-heading">Featured Games</h3>
+            </div>
+          </div>
+          <div class="featured-carousel-strip" id="featuredCarouselStrip">
+            <!-- Injected by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Clean bottom spacer for bottom nav -->
+        <div class="home-dock-spacer"></div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 2: PROMO (EVENTS & REWARDS)
+           ==================================================================== -->
+      <section class="tab-pane" id="panePromo">
+        <div class="tab-inner-wrap">
+          <div class="promo-hero-banner">
+            <div class="hero-icon-box">🎁</div>
+            <h2>Events & Rewards Center</h2>
+            <p>Participate in official Maanwin events to earn daily cash and VIP bonuses.</p>
+          </div>
+
+          <div class="activity-cards-list">
+            <div class="act-card">
+              <span class="act-tag hot">HOT</span>
+              <div class="act-details">
+                <h3>First Deposit 100% Cash Bonus</h3>
+                <p>Deposit ₹500 or more and get 100% instant matching cash bonus up to ₹10,000!</p>
+                <div class="reward-chip">✨ Up to ₹10,000</div>
+              </div>
+              <button type="button" class="btn-claim-promo" data-act="deposit">Claim Bonus</button>
+            </div>
+
+            <div class="act-card">
+              <span class="act-tag daily">DAILY</span>
+              <div class="act-details">
+                <h3>Daily Check-in & Cash Rain</h3>
+                <p>Claim daily login rewards every day at 12:00 PM and 08:00 PM.</p>
+                <div class="reward-chip">✨ Free ₹50 - ₹500 Daily</div>
+              </div>
+              <button type="button" class="btn-claim-promo" data-act="checkin">Claim Now</button>
+            </div>
+
+            <div class="act-card">
+              <span class="act-tag vip">VIP</span>
+              <div class="act-details">
+                <h3>Loss Relief Compensation</h3>
+                <p>Get up to 10% daily loss rebate credited directly to your gaming wallet.</p>
+                <div class="reward-chip">✨ 10% Rebate</div>
+              </div>
+              <button type="button" class="btn-claim-promo" data-act="rebate">View Rebate</button>
+            </div>
+
+            <div class="act-card">
+              <span class="act-tag community">TELEGRAM</span>
+              <div class="act-details">
+                <h3>Official Channel Red Packets</h3>
+                <p>Join our official Telegram community for 3x daily mystery gift codes.</p>
+                <div class="reward-chip">✨ Daily Gift Codes</div>
+              </div>
+              <a href="https://t.me/maanwin" target="_blank" rel="noopener noreferrer" class="btn-claim-promo link-btn">Join Telegram</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 3: DEPOSIT (RECHARGE) VIEW
+           ==================================================================== -->
+      <section class="tab-pane" id="paneDeposit">
+        <div class="tab-inner-wrap payment-wrap">
+          <!-- Top nav -->
+          <div class="page-top-bar">
+            <button type="button" class="btn-back-home" id="depBackBtn">←</button>
+            <h2 class="page-title">Deposit Funds</h2>
+            <button type="button" class="btn-sub-records" id="depRecordsBtn">Records</button>
+          </div>
+
+          <!-- Balance summary -->
+          <div class="payment-balance-card">
+            <div class="pbal-info">
+              <span class="pbal-lbl">Current Balance</span>
+              <span class="pbal-val">₹ <span class="dyn-bal">0.00</span></span>
+            </div>
+            <button type="button" class="btn-refresh-bal" id="depRefreshBalBtn" title="Refresh">↻</button>
+          </div>
+
+          <!-- Channel selector -->
+          <div class="pay-section-group">
+            <span class="sec-sub-title">Select Payment Channel</span>
+            <div class="channels-selector-grid">
+              <div class="channel-card active" data-channel="upi">
+                <span class="ch-badge hot">FAST</span>
+                <div class="ch-logos">
+                  <span class="ch-icon-text">UPI / QR</span>
+                </div>
+                <span class="ch-name">Instant UPI</span>
+                <span class="ch-time">1-3 Mins</span>
+              </div>
+              <div class="channel-card" data-channel="bank">
+                <div class="ch-logos"><span class="ch-icon-text">IMPS</span></div>
+                <span class="ch-name">Bank Transfer</span>
+                <span class="ch-time">5-15 Mins</span>
+              </div>
+              <div class="channel-card" data-channel="usdt">
+                <div class="ch-logos"><span class="ch-icon-text">USDT</span></div>
+                <span class="ch-name">TRC-20 Crypto</span>
+                <span class="ch-time">Auto 2 Mins</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick chips -->
+          <div class="pay-section-group">
+            <span class="sec-sub-title">Deposit Amount (₹)</span>
+            <div class="amount-chips-matrix" id="depositChips">
+              <button type="button" class="chip-btn" data-val="100">₹100</button>
+              <button type="button" class="chip-btn" data-val="300">₹300</button>
+              <button type="button" class="chip-btn selected" data-val="500"><span class="b-pill">+2%</span>₹500</button>
+              <button type="button" class="chip-btn" data-val="1000"><span class="b-pill">+3%</span>₹1,000</button>
+              <button type="button" class="chip-btn" data-val="2000"><span class="b-pill">+5%</span>₹2,000</button>
+              <button type="button" class="chip-btn" data-val="5000"><span class="b-pill">+5%</span>₹5,000</button>
+              <button type="button" class="chip-btn" data-val="10000"><span class="b-pill">+8%</span>₹10,000</button>
+              <button type="button" class="chip-btn" data-val="20000"><span class="b-pill">+10%</span>₹20,000</button>
+              <button type="button" class="chip-btn" data-val="50000"><span class="b-pill">+12%</span>₹50,000</button>
+            </div>
+
+            <div class="custom-amt-input-wrap">
+              <span class="cur-prefix">₹</span>
+              <input type="number" id="depositAmtInput" value="500" min="100" max="50000" />
+              <button type="button" class="btn-clear-field" id="clearDepAmtBtn">✕</button>
+            </div>
+            <span class="limits-text">Single deposit limit: ₹100 - ₹50,000</span>
+          </div>
+
+          <!-- Official VPA Box -->
+          <div class="official-vpa-box">
+            <div class="vpa-head">
+              <span class="vpa-title">Official Deposit UPI ID</span>
+              <span class="vpa-status">Online 24/7</span>
+            </div>
+            <div class="vpa-row">
+              <code class="vpa-address" id="officialUpiText">maanwin@upi</code>
+              <button type="button" class="btn-copy-vpa" id="copyVpaBtn">Copy UPI</button>
+            </div>
+            <div class="supported-apps-row">
+              <span>Pay with:</span>
+              <span class="app-pill">PhonePe</span>
+              <span class="app-pill">Paytm</span>
+              <span class="app-pill">Google Pay</span>
+              <span class="app-pill">BHIM</span>
+            </div>
+          </div>
+
+          <!-- UTR Form -->
+          <form class="payment-action-form" id="depSubmitForm">
+            <div class="form-field-group">
+              <label for="depUtrInput">12-Digit UTR / Transaction Reference Number</label>
+              <input type="text" id="depUtrInput" required placeholder="e.g. 431982716281 (from your UPI receipt)" />
+            </div>
+
+            <div class="alert-box error hidden" id="depErrorAlert"></div>
+            <div class="alert-box success hidden" id="depSuccessAlert"></div>
+
+            <button type="submit" class="btn-primary-action" id="depSubmitBtn">
+              Deposit Now ₹<span id="depBtnAmount">500</span>
+            </button>
+          </form>
+
+          <!-- Instructions -->
+          <div class="instructions-card">
+            <h4>How to Complete Deposit:</h4>
+            <ol>
+              <li>Copy the official UPI ID shown above.</li>
+              <li>Open your UPI app (PhonePe, Paytm, GPay) and send the exact amount.</li>
+              <li>Copy the 12-digit UTR/Ref number from the payment successful screen.</li>
+              <li>Paste the UTR number here and click <strong>Deposit Now</strong>.</li>
+              <li>Wallet balance will be credited upon confirmation (1-3 minutes).</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 4: WITHDRAWAL VIEW
+           ==================================================================== -->
+      <section class="tab-pane" id="paneWithdraw">
+        <div class="tab-inner-wrap payment-wrap">
+          <div class="page-top-bar">
+            <button type="button" class="btn-back-home" id="wthBackBtn">←</button>
+            <h2 class="page-title">Bank Withdrawal</h2>
+            <button type="button" class="btn-sub-records" id="wthRecordsBtn">Records</button>
+          </div>
+
+          <div class="payment-balance-card">
+            <div class="pbal-info">
+              <span class="pbal-lbl">Withdrawable Balance</span>
+              <span class="pbal-val">₹ <span class="dyn-bal">0.00</span></span>
+            </div>
+            <div class="fee-badge">0% Fee (Free)</div>
+          </div>
+
+          <!-- Bank Form -->
+          <div class="bank-form-card">
+            <span class="sec-sub-title">Recipient Bank Information</span>
+
+            <div class="form-field-group">
+              <label for="wthBankSelect">Select Bank</label>
+              <select id="wthBankSelect" class="form-select">
+                <option value="State Bank of India">State Bank of India (SBI)</option>
+                <option value="HDFC Bank">HDFC Bank</option>
+                <option value="ICICI Bank">ICICI Bank</option>
+                <option value="Punjab National Bank">Punjab National Bank (PNB)</option>
+                <option value="Axis Bank">Axis Bank</option>
+                <option value="Bank of Baroda">Bank of Baroda</option>
+                <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+                <option value="Canara Bank">Canara Bank</option>
+                <option value="Union Bank of India">Union Bank of India</option>
+                <option value="IndusInd Bank">IndusInd Bank</option>
+              </select>
+            </div>
+
+            <div class="form-field-group">
+              <label for="wthHolderName">Account Holder Name</label>
+              <input type="text" id="wthHolderName" placeholder="Enter name as per bank records" required />
+            </div>
+
+            <div class="form-field-group">
+              <label for="wthAccountNo">Bank Account Number</label>
+              <input type="text" id="wthAccountNo" placeholder="Enter bank account number" required />
+            </div>
+
+            <div class="form-field-group">
+              <label for="wthIfsc">Bank IFSC Code</label>
+              <input type="text" id="wthIfsc" placeholder="e.g. SBIN0001234" style="text-transform:uppercase" required />
+            </div>
+          </div>
+
+          <!-- Withdrawal Amount -->
+          <div class="pay-section-group">
+            <span class="sec-sub-title">Withdrawal Amount (₹)</span>
+            <div class="amount-chips-matrix" id="withdrawChips">
+              <button type="button" class="chip-btn" data-val="500">₹500</button>
+              <button type="button" class="chip-btn selected" data-val="1000">₹1,000</button>
+              <button type="button" class="chip-btn" data-val="2500">₹2,500</button>
+              <button type="button" class="chip-btn" data-val="5000">₹5,000</button>
+              <button type="button" class="chip-btn" data-val="10000">₹10,000</button>
+              <button type="button" class="chip-btn" data-val="ALL">All In</button>
+            </div>
+
+            <div class="custom-amt-input-wrap">
+              <span class="cur-prefix">₹</span>
+              <input type="number" id="withdrawAmtInput" value="1000" min="110" max="50000" />
+            </div>
+            <span class="limits-text">Single withdrawal limit: ₹110 - ₹50,000 (24/7 Automated)</span>
+          </div>
+
+          <div class="alert-box error hidden" id="wthErrorAlert"></div>
+          <div class="alert-box success hidden" id="wthSuccessAlert"></div>
+
+          <button type="button" class="btn-primary-action" id="wthSubmitBtn">
+            Confirm Bank Withdrawal
+          </button>
+
+          <div class="instructions-card">
+            <h4>Withdrawal Information:</h4>
+            <ol>
+              <li>Withdrawals are processed 24/7 directly to your bank account.</li>
+              <li>Please verify your Account Number and IFSC Code carefully.</li>
+              <li>Arrives in bank within 5-15 minutes. 0% platform service fee.</li>
+              <li>Daily free withdrawal limit: 3 times.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 5: EARN (REFERRAL & COMMISSION)
+           ==================================================================== -->
+      <section class="tab-pane" id="paneEarn">
+        <div class="tab-inner-wrap">
+          <div class="promo-hero-banner earn-theme">
+            <div class="hero-icon-box">🤝</div>
+            <h2>Agent Referral Program</h2>
+            <p>Invite friends and earn up to 85% multi-tier lifetime commission!</p>
+          </div>
+
+          <div class="earn-stats-grid">
+            <div class="estat-card">
+              <span class="estat-lbl">Total Commission</span>
+              <span class="estat-num gold">₹ 0.00</span>
+            </div>
+            <div class="estat-card">
+              <span class="estat-lbl">Invited Friends</span>
+              <span class="estat-num">0</span>
+            </div>
+            <div class="estat-card">
+              <span class="estat-lbl">Commission Tier</span>
+              <span class="estat-num">Up to 85%</span>
+            </div>
+          </div>
+
+          <div class="referral-box-card">
+            <h3>Your Exclusive Invitation Link</h3>
+            <div class="ref-input-group">
+              <input type="text" id="referralLinkInput" readonly value="https://maanwin.com/?r=MAANWIN" />
+              <button type="button" class="btn-copy-ref" id="copyRefLinkBtn">Copy</button>
+            </div>
+
+            <div class="ref-social-share-row">
+              <a href="#" target="_blank" class="btn-social-share telegram" id="shareTgBtn">
+                <span>Share Telegram</span>
+              </a>
+              <a href="#" target="_blank" class="btn-social-share whatsapp" id="shareWaBtn">
+                <span>Share WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 6: PROFILE (MINE / PERSONAL CENTER)
+           ==================================================================== -->
+      <section class="tab-pane" id="paneProfile">
+        <div class="tab-inner-wrap profile-wrap">
+          
+          <!-- Hero Profile Card -->
+          <div class="profile-hero-s11">
+            <div class="pro-top-row">
+              <div class="pro-avatar-wrap">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span class="cam-icon">📷</span>
+              </div>
+              <div class="pro-name-col">
+                <div class="pro-title-line">
+                  <h3 class="pro-name" id="profileFullName">User Member</h3>
+                  <span class="pro-vip-badge">👑 VIP 1</span>
+                </div>
+                <div class="pro-uid-line" id="profileUidBtn" title="Click to copy UID">
+                  <span>UID: <span id="profileUidVal">84920182</span></span>
+                  <span class="copy-sym">📋</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Balance strip with Deposit and Withdraw buttons -->
+            <div class="pro-balance-strip">
+              <div class="pbal-left">
+                <span class="pbal-title">Total Balance</span>
+                <span class="pbal-val">₹ <span class="dyn-bal">0.00</span></span>
+              </div>
+              <div class="pbal-buttons">
+                <button type="button" class="btn-pro-dep" id="proDepBtn">+ Deposit</button>
+                <button type="button" class="btn-pro-wth" id="proWthBtn">↑ Withdraw</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Financial 3-box Metric -->
+          <div class="pro-metrics-bar">
+            <div class="pmetric-box">
+              <span class="pm-val green">₹ 0.00</span>
+              <span class="pm-lbl">Today's Profit</span>
+            </div>
+            <div class="pmetric-box">
+              <span class="pm-val">0</span>
+              <span class="pm-lbl">Total Bets</span>
+            </div>
+            <div class="pmetric-box">
+              <span class="pm-val">₹ 0.00</span>
+              <span class="pm-lbl">Total Rebate</span>
+            </div>
+          </div>
+
+          <!-- 8-Card Service Grid -->
+          <div class="service-cards-matrix">
+            <div class="service-item" id="srvBettingRecords">
+              <div class="srv-icon-box">🎮</div>
+              <div class="srv-texts">
+                <span class="srv-title">Betting Records</span>
+                <span class="srv-desc">Fair game bet history</span>
+              </div>
+              <span class="srv-arrow">›</span>
+            </div>
+
+            <div class="service-item" id="srvTransactionHistory">
+              <div class="srv-icon-box">📜</div>
+              <div class="srv-texts">
+                <span class="srv-title">Transactions</span>
+                <span class="srv-desc">Deposit & withdrawal slips</span>
+              </div>
+              <span class="srv-arrow">›</span>
+            </div>
+
+            <div class="service-item" id="srvVipPrivileges">
+              <div class="srv-icon-box">👑</div>
+              <div class="srv-texts">
+                <span class="srv-title">VIP Privileges</span>
+                <span class="srv-desc">Daily rebate & level rewards</span>
+              </div>
+              <span class="srv-arrow">›</span>
+            </div>
+
+            <div class="service-item" id="srvGiftReward">
+              <div class="srv-icon-box">🎁</div>
+              <div class="srv-texts">
+                <span class="srv-title">Reward Center</span>
+                <span class="srv-desc">Gift codes & daily check-in</span>
+              </div>
+              <span class="srv-arrow">›</span>
+            </div>
+
+            <div class="service-item" id="srvNotifications">
+              <div class="srv-icon-box">🔔</div>
+              <div class="srv-texts">
+                <span class="srv-title">Notifications</span>
+                <span class="srv-desc">System announcements</span>
+              </div>
+              <span class="srv-arrow">›</span>
+            </div>
+
+            <div class="service-item" id="srvSecurity">
+              <div class="srv-icon-box">🛡️</div>
+              <div class="srv-texts">
+                <span class="srv-title">Account Security</span>
+                <span class="srv-desc">Password & account bind</span>
+              </div>
+              <span class="srv-arrow">›</span>
+            </div>
+
+            <div class="service-item" id="srvSupport">
+              <div class="srv-icon-box">💬</div>
+              <div class="srv-texts">
+                <span class="srv-title">Customer Service</span>
+                <span class="srv-desc">24/7 Telegram & WhatsApp</span>
+              </div>
+              <span class="srv-arrow">›</span>
+            </div>
+
+            <div class="service-item" id="srvReferral">
+              <div class="srv-icon-box">👥</div>
+              <div class="srv-texts">
+                <span class="srv-title">Referral Program</span>
+                <span class="srv-desc">Earn up to 85% commission</span>
+              </div>
+              <span class="srv-arrow">›</span>
+            </div>
+          </div>
+
+          <!-- Security Assurance -->
+          <div class="security-banner-card">
+            <span>🛡️ Protected by 256-Bit SSL Banking Grade Encryption</span>
+          </div>
+
+          <!-- Logout Button -->
+          <button type="button" class="btn-logout-account" id="logoutAccountBtn">
+            Log Out Account
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ======================================================================
+         BOTTOM TAB NAVIGATION BAR (WITH ANIMATED GOLD CHEST)
+         ====================================================================== -->
+    <nav class="bottom-tabbar" id="bottomTabbar">
+      <div class="tabbar-container">
+        <!-- Left Side: Home & Promo -->
+        <div class="tab-side left">
+          <button type="button" class="nav-tab active" data-tab="home" id="tabHome">
+            <svg class="tab-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span class="tab-text">Home</span>
+          </button>
+          <button type="button" class="nav-tab" data-tab="promo" id="tabPromo">
+            <svg class="tab-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span class="tab-text">Promo</span>
+          </button>
+        </div>
+
+        <!-- Center Floating Gold Chest with live Animation -->
+        <button type="button" class="nav-tab center-chest" id="tabChest" aria-label="Bonus Chest">
+          <div class="chest-glow-aura"></div>
+          <canvas id="chestCanvas" width="149" height="149"></canvas>
+        </button>
+
+        <!-- Right Side: Earn & Profile -->
+        <div class="tab-side right">
+          <button type="button" class="nav-tab" data-tab="earn" id="tabEarn">
+            <svg class="tab-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 18V6"></path></svg>
+            <span class="tab-text">Earn</span>
+          </button>
+          <button type="button" class="nav-tab" data-tab="profile" id="tabProfile">
+            <svg class="tab-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span class="tab-text">Profile</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Floating 24/7 Telegram Support Button -->
+    <a href="https://t.me/maanwin" target="_blank" rel="noopener noreferrer" class="floating-support-btn" title="24/7 Telegram Support">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </a>
+
+    <!-- ======================================================================
+         MODAL 1: AUTHENTICATION MODAL (LOGIN & SIGN UP)
+         ====================================================================== -->
+    <div class="modal-overlay hidden" id="authModal">
+      <div class="modal-card">
+        <button type="button" class="modal-close" id="authCloseBtn">✕</button>
+
+        <div class="modal-header-logo">
+          <img src="assets/logo/maanwin-logo.webp" alt="Maanwin" />
+        </div>
+
+        <div class="auth-tabs-row">
+          <button type="button" class="auth-tab-btn active" id="authTabLogin">Sign In</button>
+          <button type="button" class="auth-tab-btn" id="authTabSignup">Sign Up</button>
+        </div>
+
+        <div class="alert-box error hidden" id="authErrorAlert"></div>
+        <div class="alert-box success hidden" id="authSuccessAlert"></div>
+
+        <form class="auth-form-wrap" id="authForm">
+          <!-- Full Name for Signup -->
+          <div class="form-group-line hidden" id="fgFullName">
+            <label for="authFullNameInput">Full Name</label>
+            <div class="input-line-box">
+              <span class="input-icon">👤</span>
+              <input type="text" id="authFullNameInput" placeholder="Enter your full name" />
+            </div>
+          </div>
+
+          <!-- Gmail / Email -->
+          <div class="form-group-line">
+            <label for="authEmailInput">Gmail / Email ID</label>
+            <div class="input-line-box">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="authEmailInput" required placeholder="yourname@gmail.com" />
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group-line">
+            <div class="label-row-between">
+              <label for="authPasswordInput">Password</label>
+              <button type="button" class="link-forgot" id="forgotPwdLink">Forgot password?</button>
+            </div>
+            <div class="input-line-box">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="authPasswordInput" required placeholder="••••••••" />
+              <button type="button" class="btn-toggle-eye" id="togglePasswordBtn">👁️</button>
+            </div>
+          </div>
+
+          <!-- Confirm Password for Signup -->
+          <div class="form-group-line hidden" id="fgConfirmPassword">
+            <label for="authConfirmPwdInput">Confirm Password</label>
+            <div class="input-line-box">
+              <span class="input-icon">🔑</span>
+              <input type="password" id="authConfirmPwdInput" placeholder="••••••••" />
+            </div>
+          </div>
+
+          <!-- Invite code for Signup -->
+          <div class="form-group-line hidden" id="fgInviteCode">
+            <label for="authInviteInput">Invitation Code (Optional)</label>
+            <div class="input-line-box">
+              <span class="input-icon">🎁</span>
+              <input type="text" id="authInviteInput" value="MAANWIN" />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-auth-submit" id="authSubmitBtn">
+            Sign In with Gmail
+          </button>
+        </form>
+
+        <div class="auth-footer-toggle">
+          <span id="authToggleHint">Don't have an account?</span>
+          <button type="button" class="btn-switch-auth" id="authSwitchBtn">Sign Up here</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         MODAL 2: WELCOME BONUS MODAL
+         ====================================================================== -->
+    <div class="modal-overlay hidden" id="welcomeModal">
+      <div class="modal-card bonus-card-theme">
+        <button type="button" class="modal-close" id="welcomeCloseBtn">✕</button>
+        <div class="bonus-hero-art">🎁</div>
+        <h2>Welcome to Maanwin!</h2>
+        <p class="bonus-sub-txt">Claim your <strong>100% First Deposit Cash Bonus</strong> up to ₹10,000 + ₹500 Instant Welcome Bonus!</p>
+
+        <div class="bonus-claim-box">
+          <span class="b-lbl">Special Welcome Gift</span>
+          <span class="b-val">₹500.00</span>
+        </div>
+
+        <button type="button" class="btn-claim-welcome" id="claimWelcomeBtn">
+          Claim Bonus Now
+        </button>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         MODAL 3: GAME DEMO RUNNER MODAL
+         ====================================================================== -->
+    <div class="modal-overlay hidden" id="gameModal">
+      <div class="game-stage-card">
+        <div class="game-stage-head">
+          <div class="ghead-left">
+            <span class="live-tag">LIVE</span>
+            <h3 id="gameModalTitle">Aviator</h3>
+          </div>
+          <button type="button" class="modal-close" id="gameCloseBtn">✕</button>
+        </div>
+
+        <div class="game-stage-canvas-area" id="gameCanvasArea">
+          <div class="game-placeholder-content">
+            <div class="game-run-spinner">🚀</div>
+            <h2 id="gameRunnerText">Connecting to Game Server...</h2>
+            <p>Provably Fair RNG Engine Activated</p>
+            <div class="demo-game-controls">
+              <button type="button" class="btn-demo-action" id="demoBetBtn">Place Demo Bet (₹100)</button>
+              <button type="button" class="btn-demo-cashout hidden" id="demoCashoutBtn">Cash Out (1.85x)</button>
+            </div>
+            <p class="demo-feedback-msg" id="demoFeedback"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-popup hidden" id="toastNotification">
+      <span class="toast-msg" id="toastMessage">Success</span>
+    </div>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
