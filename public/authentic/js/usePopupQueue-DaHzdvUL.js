@@ -1,0 +1,1 @@
+import{r as e}from"./index-BjXZKklj.js";const i={RESERVE_GAME:100,LUCKY_BONUS:200,CASH_DROP:250,ACTIVE_POPUP:300,WITHDRAW_REJECT:400,WITHDRAW_REMIND:500},t=e(new Map);function n(s,r){t.set(s,r)}function u(s){for(const[r,o]of t)if(r<s&&o)return!0;return!1}export{i as P,u as i,n as s};

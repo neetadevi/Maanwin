@@ -1,0 +1,1 @@
+import{J as u,k as i,z as d}from"./index-BjXZKklj.js";function f({source:o}={source:void 0}){const{text:t,copy:s,copied:c,isSupported:p}=u({source:o,legacy:!0}),a=d(),{t:n,te:e}=i();return{text:t,copy:async y=>{await s(y||(o==null?void 0:o.value)),a.success(e("t1253")?n("t1253"):"copy successful")},copied:c,isSupported:p}}export{f as u};
