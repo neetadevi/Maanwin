@@ -1,7 +1,10 @@
 import { getAssetUrl } from '../utils/assetUrl';
+import { useAdminConfig } from '../context/AdminConfigContext';
 import { Send, MessageCircle, ShieldAlert, Lock, CheckCircle2 } from 'lucide-react';
 
 export function Footer() {
+  const { config } = useAdminConfig();
+
   return (
     <footer className="site-footer">
       {/* Official Community Channels */}
@@ -12,7 +15,7 @@ export function Footer() {
         </div>
         <div className="community-buttons">
           <a
-            href="https://t.me/maan_win"
+            href={config.telegramUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-community telegram"
@@ -21,7 +24,7 @@ export function Footer() {
             <span>Join Telegram</span>
           </a>
           <a
-            href="https://whatsapp.com/channel/0029Vb8IHU0AojYq6RyVDG3s"
+            href={config.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-community whatsapp"
@@ -72,6 +75,13 @@ export function Footer() {
         <p className="copyright-txt">
           © 2026 Maanwin. All Rights Reserved. YOUR GAMING, OUR PRIORITY!
         </p>
+
+        {/* Subtle Admin Link */}
+        <div className="footer-admin-link">
+          <a href="#/admin" className="admin-portal-shortcut">
+            Admin Portal
+          </a>
+        </div>
       </div>
     </footer>
   );

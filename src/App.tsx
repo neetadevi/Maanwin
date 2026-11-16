@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
+import { useAdminConfig } from './context/AdminConfigContext';
 import { Header } from './components/Header';
 import { BannerSlider } from './components/BannerSlider';
 import { NoticeBar } from './components/NoticeBar';
@@ -12,12 +13,38 @@ import { Footer } from './components/Footer';
 import { BottomNav } from './components/BottomNav';
 import { AuthModal } from './components/AuthModal';
 import { GamePlayModal } from './components/GamePlayModal';
+import { AdminPanel } from './components/AdminPanel';
 import { ActivityView, PromotionView, WalletView, MineView } from './components/TabsContent';
 import { CATEGORIES, type GameItem } from './data/gamesData';
 
 export function App() {
   const { user } = useAuth();
-  
+  const { config } = useAdminConfig();
+
+  // Route state: check if URL is /admin or #/admin
+  const [isAdminRoute, setIsAdminRoute] = useState<boolean>(() => {
+    const hash = window.location.hash.toLowerCase();
+    const path = window.location.pathname.toLowerCase();
+    const search = window.location.search.toLowerCase();
+    return hash.includes('admin') || path.endsWith('/admin') || path.endsWith('/admin/') || search.includes('admin');
+  });
+
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      const path = window.location.pathname.toLowerCase();
+      const search = window.location.search.toLowerCase();
+      setIsAdminRoute(hash.includes('admin') || path.endsWith('/admin') || path.endsWith('/admin/') || search.includes('admin'));
+    };
+
+    window.addEventListener('hashchange', handleUrlChange);
+    window.addEventListener('popstate', handleUrlChange);
+    return () => {
+      window.removeEventListener('hashchange', handleUrlChange);
+      window.removeEventListener('popstate', handleUrlChange);
+    };
+  }, []);
+
   // Navigation & Category states
   const [activeTab, setActiveTab] = useState<string>('home');
   const [activeCategoryCode, setActiveCategoryCode] = useState<string>(
@@ -43,6 +70,18 @@ export function App() {
     (c) => c.categoryCode === activeCategoryCode
   ) || CATEGORIES[0];
 
+  // If in Admin Mode, render the Admin Control Center
+  if (isAdminRoute) {
+    return (
+      <AdminPanel
+        onBackToSite={() => {
+          window.location.hash = '';
+          setIsAdminRoute(false);
+        }}
+      />
+    );
+  }
+
   return (
     <div className="app-shell">
       {/* Top Header */}
@@ -50,6 +89,7 @@ export function App() {
         onOpenAuth={openAuth}
         lang={lang}
         onToggleLang={() => setLang(lang === 'en' ? 'hi' : 'en')}
+        onNavigateTab={(tab) => setActiveTab(tab)}
       />
 
       {/* Main Tab Content */}
@@ -59,7 +99,7 @@ export function App() {
             {/* Banner Slider */}
             <BannerSlider />
 
-            {/* Scrolling Marquee Notice */}
+            {/* Scrolling Marquee Notice (Real-time synced with Admin) */}
             <NoticeBar lang={lang} />
 
             {/* Category Navigation Tabs */}
@@ -81,7 +121,7 @@ export function App() {
               onPlayGame={handlePlayGame}
             />
 
-            {/* Live Winning Information */}
+            {/* Live Winning Information (Synced with Admin) */}
             <WinningSection />
 
             {/* Platform Partners / Vendors */}
@@ -100,7 +140,7 @@ export function App() {
 
       {/* Floating Customer Support Button */}
       <a
-        href="https://t.me/maan_win"
+        href={config.telegramUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="floating-telegram-btn"

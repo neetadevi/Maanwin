@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useAdminConfig } from '../context/AdminConfigContext';
 import { getAssetUrl } from '../utils/assetUrl';
 import { Download, Globe, Wallet, User as UserIcon, LogIn, UserPlus } from 'lucide-react';
 
@@ -7,11 +8,17 @@ interface HeaderProps {
   onOpenAuth: (mode: 'login' | 'signup') => void;
   lang: 'en' | 'hi';
   onToggleLang: () => void;
+  onNavigateTab?: (tab: string) => void;
 }
 
-export function Header({ onOpenAuth, lang, onToggleLang }: HeaderProps) {
+export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab }: HeaderProps) {
   const { user } = useAuth();
+  const { getUserBalance } = useAdminConfig();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+
+  // Compute live user balance from admin config: check by ID, phone, or email
+  const userKey = user?.id || user?.user_metadata?.phone || user?.email;
+  const balance = getUserBalance(userKey) || getUserBalance(user?.email) || getUserBalance(user?.id) || 0;
 
   return (
     <header className="site-header">
@@ -56,13 +63,21 @@ export function Header({ onOpenAuth, lang, onToggleLang }: HeaderProps) {
           {/* User state */}
           {user ? (
             <div className="user-logged-box">
-              <div className="balance-pill">
+              <div className="balance-pill" onClick={() => onNavigateTab && onNavigateTab('wallet')}>
                 <Wallet size={16} className="wallet-icon" />
                 <span className="currency">₹</span>
-                <span className="balance-amt">0.00</span>
+                <span className="balance-amt">
+                  {balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
               </div>
 
-              <div className="user-profile-btn" onClick={() => setShowUserDropdown(!showUserDropdown)}>
+              <div
+                className="user-profile-btn"
+                onClick={() => {
+                  setShowUserDropdown(!showUserDropdown);
+                  if (onNavigateTab) onNavigateTab('mine');
+                }}
+              >
                 <div className="avatar-circle">
                   <UserIcon size={18} />
                 </div>
@@ -72,7 +87,7 @@ export function Header({ onOpenAuth, lang, onToggleLang }: HeaderProps) {
               <button
                 type="button"
                 className="btn-deposit-header"
-                onClick={() => alert('Deposit gateway: Please contact 24/7 Support or WhatsApp')}
+                onClick={() => onNavigateTab && onNavigateTab('wallet')}
               >
                 Deposit
               </button>

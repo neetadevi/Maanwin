@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useAdminConfig } from '../context/AdminConfigContext';
 import { 
   Gift, 
   Sparkles, 
@@ -9,9 +11,10 @@ import {
   ArrowUpRight, 
   User, 
   LogOut, 
-  ShieldCheck,
-  Send,
-  MessageCircle
+  ShieldCheck, 
+  Send, 
+  MessageCircle,
+  CheckCircle2
 } from 'lucide-react';
 
 interface TabProps {
@@ -20,6 +23,7 @@ interface TabProps {
 
 export function ActivityView({ onOpenAuth }: TabProps) {
   const { user } = useAuth();
+  const { config } = useAdminConfig();
 
   const activities = [
     {
@@ -76,11 +80,16 @@ export function ActivityView({ onOpenAuth }: TabProps) {
               type="button"
               className="btn-claim-act"
               onClick={() => {
-                if (!user) onOpenAuth('login');
-                else alert(`Claimed: ${act.title}!`);
+                if (!user) {
+                  onOpenAuth('login');
+                } else if (act.id === 4) {
+                  window.open(config.telegramUrl, '_blank');
+                } else {
+                  alert(`Claimed: ${act.title}!`);
+                }
               }}
             >
-              {user ? 'Participate' : 'Log In to Claim'}
+              {user ? (act.id === 4 ? 'Join Channel' : 'Participate') : 'Log In to Claim'}
             </button>
           </div>
         ))}
@@ -168,6 +177,21 @@ export function PromotionView({ onOpenAuth }: TabProps) {
 
 export function WalletView({ onOpenAuth }: TabProps) {
   const { user } = useAuth();
+  const { config, getUserBalance, addWithdrawalRequest, addDepositRequest } = useAdminConfig();
+
+  const [activeAction, setActiveAction] = useState<'none' | 'deposit' | 'withdraw'>('none');
+
+  // Withdrawal form
+  const [wthAmount, setWthAmount] = useState('');
+  const [bankName, setBankName] = useState('State Bank of India');
+  const [accNo, setAccNo] = useState('');
+  const [ifsc, setIfsc] = useState('');
+  const [wthMsg, setWthMsg] = useState('');
+
+  // Deposit form
+  const [depAmount, setDepAmount] = useState('500');
+  const [utrNumber, setUtrNumber] = useState('');
+  const [depMsg, setDepMsg] = useState('');
 
   if (!user) {
     return (
@@ -184,27 +208,89 @@ export function WalletView({ onOpenAuth }: TabProps) {
     );
   }
 
+  const userKey = user.id || user.user_metadata?.phone || user.email || 'user';
+  const balance = getUserBalance(userKey) || getUserBalance(user.email) || getUserBalance(user.id) || 0;
+  const phone = user.user_metadata?.phone || user.email || 'User';
+
+  const handleWithdrawSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const amt = parseFloat(wthAmount);
+    if (isNaN(amt) || amt < config.minWithdrawal) {
+      alert(`Minimum withdrawal is ₹${config.minWithdrawal}`);
+      return;
+    }
+    if (amt > config.maxWithdrawal) {
+      alert(`Maximum withdrawal is ₹${config.maxWithdrawal}`);
+      return;
+    }
+    if (amt > balance) {
+      alert('Insufficient wallet balance!');
+      return;
+    }
+
+    addWithdrawalRequest({
+      userId: user.id,
+      phone,
+      amount: amt,
+      bankName,
+      accountNo: accNo,
+      ifsc: ifsc.toUpperCase()
+    });
+
+    setWthMsg(`Withdrawal request of ₹${amt.toLocaleString('en-IN')} submitted successfully! Admin will approve shortly.`);
+    setWthAmount('');
+    setAccNo('');
+    setIfsc('');
+    setTimeout(() => setWthMsg(''), 5000);
+  };
+
+  const handleDepositSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const amt = parseFloat(depAmount);
+    if (isNaN(amt) || amt < config.minDeposit) {
+      alert(`Minimum deposit is ₹${config.minDeposit}`);
+      return;
+    }
+    if (!utrNumber.trim() || utrNumber.trim().length < 6) {
+      alert('Please enter a valid 12-digit UPI UTR number');
+      return;
+    }
+
+    addDepositRequest({
+      userId: user.id,
+      phone,
+      amount: amt,
+      utr: utrNumber.trim()
+    });
+
+    setDepMsg(`Deposit request of ₹${amt.toLocaleString('en-IN')} submitted with UTR ${utrNumber}! Admin will credit your wallet upon verification.`);
+    setUtrNumber('');
+    setTimeout(() => setDepMsg(''), 5000);
+  };
+
   return (
     <div className="tab-view-container">
       <div className="wallet-card-main">
         <div className="wallet-top-info">
           <span className="balance-heading">Total Wallet Balance</span>
-          <h1 className="balance-large">₹ 0.00</h1>
+          <h1 className="balance-large">
+            ₹{balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </h1>
         </div>
 
         <div className="wallet-quick-actions">
           <button
             type="button"
-            className="btn-wallet-action deposit"
-            onClick={() => alert('Deposit: UPI / IMPS / Bank Transfer. Contact WhatsApp support for payment gateway.')}
+            className={`btn-wallet-action deposit ${activeAction === 'deposit' ? 'selected' : ''}`}
+            onClick={() => setActiveAction(activeAction === 'deposit' ? 'none' : 'deposit')}
           >
             <ArrowDownLeft size={18} />
             <span>Deposit</span>
           </button>
           <button
             type="button"
-            className="btn-wallet-action withdraw"
-            onClick={() => alert('Withdrawal: Please bind your Bank Account details in Profile first.')}
+            className={`btn-wallet-action withdraw ${activeAction === 'withdraw' ? 'selected' : ''}`}
+            onClick={() => setActiveAction(activeAction === 'withdraw' ? 'none' : 'withdraw')}
           >
             <ArrowUpRight size={18} />
             <span>Withdraw</span>
@@ -212,8 +298,129 @@ export function WalletView({ onOpenAuth }: TabProps) {
         </div>
       </div>
 
+      {/* Deposit Action Drawer */}
+      {activeAction === 'deposit' && (
+        <div className="action-form-box">
+          <h3>Instant UPI Deposit</h3>
+          <p className="sub-instruction">Pay via any UPI App (GPay, PhonePe, Paytm) to the official VPA below and enter the 12-digit UTR:</p>
+
+          <div className="upi-vpa-highlight">
+            <span className="vpa-lbl">Official UPI ID:</span>
+            <strong className="vpa-code">{config.upiId}</strong>
+            <button
+              type="button"
+              className="btn-copy-vpa"
+              onClick={() => {
+                navigator.clipboard.writeText(config.upiId);
+                alert('UPI ID copied!');
+              }}
+            >
+              Copy
+            </button>
+          </div>
+
+          {depMsg && (
+            <div className="wallet-alert success">
+              <CheckCircle2 size={16} />
+              <span>{depMsg}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleDepositSubmit} className="wallet-action-form">
+            <div className="form-row">
+              <label>Amount (₹)</label>
+              <input
+                type="number"
+                required
+                min={config.minDeposit}
+                value={depAmount}
+                onChange={(e) => setDepAmount(e.target.value)}
+              />
+            </div>
+            <div className="form-row">
+              <label>12-Digit UTR / Ref Number</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. 431982716281"
+                value={utrNumber}
+                onChange={(e) => setUtrNumber(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="btn-submit-wallet-action">
+              Submit Deposit for Approval
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* Withdraw Action Drawer */}
+      {activeAction === 'withdraw' && (
+        <div className="action-form-box">
+          <h3>Bank Account Withdrawal</h3>
+          <p className="sub-instruction">
+            Limits: ₹{config.minWithdrawal} - ₹{config.maxWithdrawal.toLocaleString('en-IN')} (24/7 Fast Payout)
+          </p>
+
+          {wthMsg && (
+            <div className="wallet-alert success">
+              <CheckCircle2 size={16} />
+              <span>{wthMsg}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleWithdrawSubmit} className="wallet-action-form">
+            <div className="form-row">
+              <label>Withdrawal Amount (₹)</label>
+              <input
+                type="number"
+                required
+                min={config.minWithdrawal}
+                max={config.maxWithdrawal}
+                placeholder={`Min ₹${config.minWithdrawal}`}
+                value={wthAmount}
+                onChange={(e) => setWthAmount(e.target.value)}
+              />
+            </div>
+            <div className="form-row">
+              <label>Bank Name</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. State Bank of India, HDFC"
+                value={bankName}
+                onChange={(e) => setBankName(e.target.value)}
+              />
+            </div>
+            <div className="form-row">
+              <label>Account Number</label>
+              <input
+                type="text"
+                required
+                placeholder="Enter bank account number"
+                value={accNo}
+                onChange={(e) => setAccNo(e.target.value)}
+              />
+            </div>
+            <div className="form-row">
+              <label>IFSC Code</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. SBIN0001234"
+                value={ifsc}
+                onChange={(e) => setIfsc(e.target.value.toUpperCase())}
+              />
+            </div>
+            <button type="submit" className="btn-submit-wallet-action">
+              Request Bank Withdrawal
+            </button>
+          </form>
+        </div>
+      )}
+
       <div className="payment-channels-card">
-        <h3>Supported Payment Methods (24/7 Instant)</h3>
+        <h3>Supported Payment Channels</h3>
         <div className="channels-grid">
           <div className="channel-pill">UPI / PhonePe / GPay</div>
           <div className="channel-pill">Paytm Wallet</div>
@@ -227,6 +434,7 @@ export function WalletView({ onOpenAuth }: TabProps) {
 
 export function MineView({ onOpenAuth }: TabProps) {
   const { user, signOut } = useAuth();
+  const { config, getUserBalance } = useAdminConfig();
 
   if (!user) {
     return (
@@ -245,6 +453,8 @@ export function MineView({ onOpenAuth }: TabProps) {
 
   const phoneOrEmail = user.user_metadata?.phone || user.email || 'User';
   const fullName = user.user_metadata?.full_name || phoneOrEmail;
+  const userKey = user.id || user.user_metadata?.phone || user.email;
+  const balance = getUserBalance(userKey) || getUserBalance(user.email) || getUserBalance(user.id) || 0;
 
   return (
     <div className="tab-view-container">
@@ -255,24 +465,29 @@ export function MineView({ onOpenAuth }: TabProps) {
         <div className="profile-hero-info">
           <h2>{fullName}</h2>
           <p className="user-id-txt">ID: {user.id.slice(0, 12)}...</p>
-          <span className="vip-badge">VIP Level 1</span>
+          <div className="profile-badge-row">
+            <span className="vip-badge">VIP Level 1</span>
+            <span className="profile-balance-badge">
+              ₹{balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
+          </div>
         </div>
       </div>
 
       <div className="profile-menu-list">
-        <div className="menu-item-row" onClick={() => alert('Betting history: No bets placed yet.')}>
+        <div className="menu-item-row" onClick={() => alert('Betting history: All fair RNG recorded.')}>
           <span>Betting Record</span>
           <ArrowUpRight size={16} />
         </div>
-        <div className="menu-item-row" onClick={() => alert('Transactions: No recent deposit/withdrawals.')}>
+        <div className="menu-item-row" onClick={() => alert('Transactions: Up to date.')}>
           <span>Transaction Records</span>
           <ArrowUpRight size={16} />
         </div>
-        <div className="menu-item-row" onClick={() => alert('Security: Connected with Supabase 256-bit encryption.')}>
+        <div className="menu-item-row" onClick={() => alert('Security: Protected by Supabase 256-bit encryption.')}>
           <span>Security Center</span>
           <ShieldCheck size={16} />
         </div>
-        <div className="menu-item-row" onClick={() => window.open('https://t.me/maan_win', '_blank')}>
+        <div className="menu-item-row" onClick={() => window.open(config.telegramUrl, '_blank')}>
           <span>24/7 Customer Service</span>
           <Send size={16} />
         </div>

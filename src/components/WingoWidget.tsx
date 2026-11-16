@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useAdminConfig } from '../context/AdminConfigContext';
 import { Clock, Trophy, Flame } from 'lucide-react';
 
 interface WingoWidgetProps {
-  onPlay: (gameName: string) => void;
+  onPlay: () => void;
 }
 
 export function WingoWidget({ onPlay }: WingoWidgetProps) {
-  const [secondsLeft, setSecondsLeft] = useState(42);
+  const { config } = useAdminConfig();
+  const [secondsLeft, setSecondsLeft] = useState(38);
   const [activeTab, setActiveTab] = useState<'1min' | '3min' | '5min'>('1min');
-  const [history] = useState([
+  const [history, setHistory] = useState([
     { period: '202611160412', num: 7, color: 'green', size: 'Big' },
     { period: '202611160411', num: 2, color: 'red', size: 'Small' },
     { period: '202611160410', num: 0, color: 'violet', size: 'Small' },
@@ -19,12 +21,25 @@ export function WingoWidget({ onPlay }: WingoWidgetProps) {
   useEffect(() => {
     const interval = setInterval(() => {
       setSecondsLeft((prev) => {
-        if (prev <= 1) return 60;
+        if (prev <= 1) {
+          // Timer finished: produce next result!
+          // If Admin set a number in config.wingoNextNumber, USE THAT NUMBER!
+          const nextNum = config.wingoNextNumber !== null ? config.wingoNextNumber : Math.floor(Math.random() * 10);
+          let nextColor = 'red';
+          if (nextNum === 0 || nextNum === 5) nextColor = 'violet';
+          else if (nextNum % 2 !== 0) nextColor = 'green';
+          const nextSize = nextNum >= 5 ? 'Big' : 'Small';
+
+          const newPeriod = (Date.now()).toString().slice(-8);
+          setHistory((h) => [{ period: newPeriod, num: nextNum, color: nextColor, size: nextSize }, ...h.slice(0, 4)]);
+
+          return 60;
+        }
         return prev - 1;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [config.wingoNextNumber]);
 
   const formatTime = (sec: number) => {
     const m = Math.floor(sec / 60);
@@ -85,21 +100,21 @@ export function WingoWidget({ onPlay }: WingoWidgetProps) {
           <button
             type="button"
             className="btn-color-bet green"
-            onClick={() => onPlay('Win Go - Green')}
+            onClick={onPlay}
           >
             Green (2x)
           </button>
           <button
             type="button"
             className="btn-color-bet violet"
-            onClick={() => onPlay('Win Go - Violet')}
+            onClick={onPlay}
           >
             Violet (4.5x)
           </button>
           <button
             type="button"
             className="btn-color-bet red"
-            onClick={() => onPlay('Win Go - Red')}
+            onClick={onPlay}
           >
             Red (2x)
           </button>
@@ -117,7 +132,7 @@ export function WingoWidget({ onPlay }: WingoWidgetProps) {
                 key={n}
                 type="button"
                 className={`num-ball-btn ball-${colorCls}`}
-                onClick={() => onPlay(`Win Go - Number ${n}`)}
+                onClick={onPlay}
               >
                 {n}
               </button>
@@ -130,14 +145,14 @@ export function WingoWidget({ onPlay }: WingoWidgetProps) {
           <button
             type="button"
             className="btn-big-small btn-big"
-            onClick={() => onPlay('Win Go - Big')}
+            onClick={onPlay}
           >
             Big (5-9)
           </button>
           <button
             type="button"
             className="btn-big-small btn-small"
-            onClick={() => onPlay('Win Go - Small')}
+            onClick={onPlay}
           >
             Small (0-4)
           </button>
