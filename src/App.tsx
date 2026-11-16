@@ -1,33 +1,144 @@
+import { useState } from 'react';
 import { useAuth } from './context/AuthContext';
-import { AuthForm } from './components/AuthForm';
-import { Dashboard } from './components/Dashboard';
-
-function AppContent() {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="loader-screen">
-        <div className="spinner-large" />
-        <p>Connecting to Supabase...</p>
-      </div>
-    );
-  }
-
-  if (user) {
-    return <Dashboard />;
-  }
-
-  return (
-    <div className="auth-page-container">
-      <div className="ambient-background" />
-      <AuthForm />
-    </div>
-  );
-}
+import { Header } from './components/Header';
+import { BannerSlider } from './components/BannerSlider';
+import { NoticeBar } from './components/NoticeBar';
+import { CategoryNav } from './components/CategoryNav';
+import { WingoWidget } from './components/WingoWidget';
+import { GamesGrid } from './components/GamesGrid';
+import { WinningSection } from './components/WinningSection';
+import { VendorsSection } from './components/VendorsSection';
+import { Footer } from './components/Footer';
+import { BottomNav } from './components/BottomNav';
+import { AuthModal } from './components/AuthModal';
+import { GamePlayModal } from './components/GamePlayModal';
+import { ActivityView, PromotionView, WalletView, MineView } from './components/TabsContent';
+import { CATEGORIES, type GameItem } from './data/gamesData';
 
 export function App() {
-  return <AppContent />;
+  const { user } = useAuth();
+  
+  // Navigation & Category states
+  const [activeTab, setActiveTab] = useState<string>('home');
+  const [activeCategoryCode, setActiveCategoryCode] = useState<string>(
+    CATEGORIES[0]?.categoryCode || 'Crash'
+  );
+  const [lang, setLang] = useState<'en' | 'hi'>('en');
+
+  // Modals state
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const [activeGame, setActiveGame] = useState<GameItem | null>(null);
+
+  const openAuth = (mode: 'login' | 'signup') => {
+    setAuthMode(mode);
+    setAuthModalOpen(true);
+  };
+
+  const handlePlayGame = (game: GameItem) => {
+    setActiveGame(game);
+  };
+
+  const currentCategory = CATEGORIES.find(
+    (c) => c.categoryCode === activeCategoryCode
+  ) || CATEGORIES[0];
+
+  return (
+    <div className="app-shell">
+      {/* Top Header */}
+      <Header
+        onOpenAuth={openAuth}
+        lang={lang}
+        onToggleLang={() => setLang(lang === 'en' ? 'hi' : 'en')}
+      />
+
+      {/* Main Tab Content */}
+      <main className="main-viewport">
+        {activeTab === 'home' && (
+          <div className="home-view-scroll">
+            {/* Banner Slider */}
+            <BannerSlider />
+
+            {/* Scrolling Marquee Notice */}
+            <NoticeBar lang={lang} />
+
+            {/* Category Navigation Tabs */}
+            <CategoryNav
+              activeCategory={activeCategoryCode}
+              onSelectCategory={setActiveCategoryCode}
+              lang={lang}
+            />
+
+            {/* If Lottery is active, show the interactive Win Go widget! */}
+            {(activeCategoryCode.includes('Lottery') || activeCategoryCode === 'C202505220412050186') && (
+              <WingoWidget onPlay={() => openAuth('login')} />
+            )}
+
+            {/* Games Grid for current category */}
+            <GamesGrid
+              games={currentCategory?.games || []}
+              categoryTitle={lang === 'hi' ? currentCategory?.name.hi : currentCategory?.name.en}
+              onPlayGame={handlePlayGame}
+            />
+
+            {/* Live Winning Information */}
+            <WinningSection />
+
+            {/* Platform Partners / Vendors */}
+            <VendorsSection />
+
+            {/* Trust Badges & Footer */}
+            <Footer />
+          </div>
+        )}
+
+        {activeTab === 'activity' && <ActivityView onOpenAuth={openAuth} />}
+        {activeTab === 'promotion' && <PromotionView onOpenAuth={openAuth} />}
+        {activeTab === 'wallet' && <WalletView onOpenAuth={openAuth} />}
+        {activeTab === 'mine' && <MineView onOpenAuth={openAuth} />}
+      </main>
+
+      {/* Floating Customer Support Button */}
+      <a
+        href="https://t.me/maan_win"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-telegram-btn"
+        title="24/7 Telegram Support"
+      >
+        <span className="online-dot" />
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+        </svg>
+      </a>
+
+      {/* Bottom Navigation */}
+      <BottomNav
+        activeTab={activeTab}
+        onSelectTab={setActiveTab}
+        onOpenAuth={openAuth}
+        isLoggedIn={!!user}
+      />
+
+      {/* Login & Register Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        initialMode={authMode}
+        onClose={() => setAuthModalOpen(false)}
+      />
+
+      {/* Game Play Simulation Modal */}
+      <GamePlayModal
+        game={activeGame}
+        onClose={() => setActiveGame(null)}
+        isLoggedIn={!!user}
+        onPromptLogin={() => {
+          setActiveGame(null);
+          openAuth('login');
+        }}
+      />
+    </div>
+  );
 }
 
 export default App;

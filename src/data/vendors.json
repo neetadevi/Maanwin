@@ -1,0 +1,238 @@
+{
+  "data": [
+    {
+      "vendorCode": "JILI",
+      "vendorName": "JILI",
+      "displayName": "JILI",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "PG",
+      "vendorName": "PG",
+      "displayName": "PG",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "JDB",
+      "vendorName": "JDB",
+      "displayName": "JDB",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "INOUT",
+      "vendorName": "INOUT",
+      "displayName": "INOUT",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "SPRIBE",
+      "vendorName": "SPRIBE",
+      "displayName": "SPRIBE",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "CQ9",
+      "vendorName": "CQ9",
+      "displayName": "CQ9",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "SEXY_Video",
+      "vendorName": "SEXY_Video",
+      "displayName": "Sexy",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "ARLottery",
+      "vendorName": "ARLottery",
+      "displayName": "AR",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": {
+        "100": "WinGo",
+        "101": "K3",
+        "102": "5D",
+        "103": "TrxWinGo",
+        "105": "MotoRace"
+      }
+    },
+    {
+      "vendorCode": "AG_Electronic",
+      "vendorName": "AG_Electronic",
+      "displayName": "YGG",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "EVO_Video",
+      "vendorName": "EVO_Video",
+      "displayName": "EVO",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "V8Card",
+      "vendorName": "V8Card",
+      "displayName": "V8",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "MG_Video",
+      "vendorName": "MG_Video",
+      "displayName": "MG",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "TB_Chess",
+      "vendorName": "TB_Chess",
+      "displayName": "TB",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "MG",
+      "vendorName": "MG",
+      "displayName": "MG",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "CMD",
+      "vendorName": "CMD",
+      "displayName": "CMD",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "SaBa",
+      "vendorName": "SaBa",
+      "displayName": "SABA",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "AG_Video",
+      "vendorName": "AG_Video",
+      "displayName": "CHOICE",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "NG",
+      "vendorName": "NG",
+      "displayName": "NG",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "EVO_Electronic",
+      "vendorName": "EVO_Electronic",
+      "displayName": "EVO",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "IM",
+      "vendorName": "IM",
+      "displayName": "IM",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "KoolBet",
+      "vendorName": "KoolBet",
+      "displayName": "KoolBet",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "ARBET",
+      "vendorName": "ARBET",
+      "displayName": "ARBET",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "BGAMING",
+      "vendorName": "BGAMING",
+      "displayName": "BGAMING",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "Card365",
+      "vendorName": "Card365",
+      "displayName": "365",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "Wickets9",
+      "vendorName": "Wickets9",
+      "displayName": "9Wickets",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "DG",
+      "vendorName": "DG",
+      "displayName": "DG",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "G9",
+      "vendorName": "G9",
+      "displayName": "9G",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    },
+    {
+      "vendorCode": "WM_Video",
+      "vendorName": "WM_Video",
+      "displayName": "WM",
+      "vendorLogoUrl": "",
+      "selectedVendorLogoUrl": "",
+      "lotteryNameDict": null
+    }
+  ],
+  "code": 0,
+  "msg": "Succeed",
+  "msgCode": 0,
+  "serverTime": 1794807977312
+}
