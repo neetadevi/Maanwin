@@ -124,7 +124,11 @@ export function AdminConfigProvider({ children }: { children: ReactNode }) {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        return { ...DEFAULT_CONFIG, ...parsed };
+        const banners = (parsed.banners && parsed.banners.length > 0 ? parsed.banners : BANNERS).map((b: BannerItem, i: number) => ({
+          ...b,
+          img: b.img || BANNERS[i % BANNERS.length].img
+        }));
+        return { ...DEFAULT_CONFIG, ...parsed, banners };
       }
     } catch (e) {
       console.error('Error loading admin config:', e);

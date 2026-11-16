@@ -86,3 +86,4 @@ export function PopularSection({ games, onPlayGame, onSeeMore }: PopularSectionP
     </div>
   );
 }
+

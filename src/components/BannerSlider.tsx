@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAdminConfig } from '../context/AdminConfigContext';
+import { getAssetUrl } from '../utils/assetUrl';
 
 export function BannerSlider() {
   const { config } = useAdminConfig();
@@ -31,7 +32,7 @@ export function BannerSlider() {
             {banners.map((banner, index) => (
               <div key={banner.id} style={{ minWidth: '100%', flex: '0 0 100%' }}>
                 <img
-                  src={banner.img}
+                  src={getAssetUrl(banner.img)}
                   alt={banner.title}
                   className="s11-hero__image is-loaded"
                   loading={index === 0 ? 'eager' : 'lazy'}

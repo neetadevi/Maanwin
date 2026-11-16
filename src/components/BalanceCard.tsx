@@ -77,3 +77,4 @@ export function BalanceCard({ onOpenAuth, onNavigateTab }: BalanceCardProps) {
     </section>
   );
 }
+

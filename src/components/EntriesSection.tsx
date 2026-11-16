@@ -50,3 +50,4 @@ export function EntriesSection({ onOpenCheckin, onOpenWheel }: EntriesSectionPro
     </div>
   );
 }
+
