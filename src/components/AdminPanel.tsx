@@ -1154,3 +1154,4 @@ export function AdminPanel({ onBackToSite }: AdminPanelProps) {
     </div>
   );
 }
+

@@ -4,16 +4,17 @@ import { useAuth } from '../context/AuthContext';
 import { getAssetUrl } from '../utils/assetUrl';
 import { 
   X, 
-  Phone, 
+  Mail, 
   Lock, 
   Eye, 
   EyeOff, 
   ArrowRight, 
   CheckCircle2, 
   AlertCircle, 
+  User,
   Gift,
   ShieldCheck,
-  Mail
+  KeyRound
 } from 'lucide-react';
 
 interface AuthModalProps {
@@ -26,16 +27,12 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
   const { refreshSession } = useAuth();
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>(initialMode);
   
-  // Login type: 'mobile' or 'email'
-  const [loginMethod, setLoginMethod] = useState<'mobile' | 'email'>('mobile');
-  
-  // Fields
-  const [mobileNumber, setMobileNumber] = useState('');
+  // Clean Gmail / Email & Password fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [inviteCode, setInviteCode] = useState('MAANWIN');
   const [fullName, setFullName] = useState('');
+  const [inviteCode, setInviteCode] = useState('MAANWIN');
 
   // UI state
   const [showPassword, setShowPassword] = useState(false);
@@ -60,74 +57,89 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
     resetMessages();
     setLoading(true);
 
-    try {
-      // Form effective email: if user entered mobile number, format as mobile@maanwin.com for Supabase Auth
-      let authEmail = email.trim();
-      if (loginMethod === 'mobile') {
-        const cleanPhone = mobileNumber.replace(/\D/g, '');
-        if (cleanPhone.length < 10) {
-          setErrorMsg('Please enter a valid 10-digit mobile number');
-          setLoading(false);
-          return;
-        }
-        authEmail = `${cleanPhone}@maanwin.com`;
-      }
+    const cleanEmail = email.trim().toLowerCase();
 
+    // Validate email format
+    if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
+      setErrorMsg('Please enter a valid Gmail / Email address (e.g. name@gmail.com)');
+      setLoading(false);
+      return;
+    }
+
+    try {
       if (mode === 'login') {
         const { data, error } = await supabase.auth.signInWithPassword({
-          email: authEmail,
-          password: password
+          email: cleanEmail,
+          password: password,
         });
 
         if (error) {
-          setErrorMsg(error.message);
+          if (error.message.toLowerCase().includes('invalid login credentials')) {
+            setErrorMsg('Incorrect Gmail ID or Password. Please try again.');
+          } else {
+            setErrorMsg(error.message);
+          }
         } else if (data.session) {
+          setSuccessMsg('Logged in successfully! Welcome back.');
           await refreshSession();
-          onClose();
+          setTimeout(() => {
+            onClose();
+          }, 600);
         }
       } else if (mode === 'signup') {
         if (password.length < 6) {
-          setErrorMsg('Password must be at least 6 characters long');
+          setErrorMsg('Password must be at least 6 characters long.');
           setLoading(false);
           return;
         }
 
         if (password !== confirmPassword) {
-          setErrorMsg('Passwords do not match');
+          setErrorMsg('Passwords do not match. Please re-enter.');
           setLoading(false);
           return;
         }
 
+        const displayName = fullName.trim() || cleanEmail.split('@')[0];
+
         const { data, error } = await supabase.auth.signUp({
-          email: authEmail,
+          email: cleanEmail,
           password: password,
           options: {
             data: {
-              phone: mobileNumber.trim(),
-              full_name: fullName.trim() || `User_${mobileNumber.slice(-4)}`,
-              invite_code: inviteCode.trim()
-            }
-          }
+              full_name: displayName,
+              display_name: displayName,
+              invite_code: inviteCode.trim() || 'MAANWIN',
+            },
+          },
         });
 
         if (error) {
-          setErrorMsg(error.message);
+          if (error.message.toLowerCase().includes('user already registered')) {
+            setErrorMsg('This Gmail ID is already registered! Please switch to Sign In.');
+          } else {
+            setErrorMsg(error.message);
+          }
         } else if (data.user) {
           if (data.session) {
-            setSuccessMsg('Account registered successfully! Logging you in...');
+            setSuccessMsg('Account created successfully! Logging you in...');
             await refreshSession();
-            setTimeout(() => onClose(), 800);
+            setTimeout(() => {
+              onClose();
+            }, 800);
           } else {
-            setSuccessMsg('Account created successfully! Please log in.');
+            setSuccessMsg('Account created successfully! You can now log in.');
             setMode('login');
           }
         }
       } else if (mode === 'forgot') {
-        const { error } = await supabase.auth.resetPasswordForEmail(authEmail);
+        const { error } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
+          redirectTo: window.location.origin + window.location.pathname,
+        });
+
         if (error) {
           setErrorMsg(error.message);
         } else {
-          setSuccessMsg('Password reset instructions sent!');
+          setSuccessMsg('Password reset instructions sent to your Gmail ID!');
         }
       }
     } catch (err: unknown) {
@@ -145,7 +157,7 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-dialog-box" onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
-        <button type="button" className="modal-close-btn" onClick={onClose}>
+        <button type="button" className="modal-close-btn" onClick={onClose} aria-label="Close modal">
           <X size={20} />
         </button>
 
@@ -176,7 +188,7 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
               className={`modal-tab ${mode === 'signup' ? 'active' : ''}`}
               onClick={() => switchMode('signup')}
             >
-              Register
+              Sign Up
             </button>
           </div>
         )}
@@ -196,79 +208,46 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
           </div>
         )}
 
-        {/* Method Toggle: Mobile or Email */}
-        {mode !== 'forgot' && (
-          <div className="login-method-row">
-            <button
-              type="button"
-              className={`method-toggle ${loginMethod === 'mobile' ? 'active' : ''}`}
-              onClick={() => setLoginMethod('mobile')}
-            >
-              <Phone size={14} />
-              <span>Mobile Phone</span>
-            </button>
-            <button
-              type="button"
-              className={`method-toggle ${loginMethod === 'email' ? 'active' : ''}`}
-              onClick={() => setLoginMethod('email')}
-            >
-              <Mail size={14} />
-              <span>Email</span>
-            </button>
-          </div>
-        )}
-
         {/* Form */}
         <form onSubmit={handleSubmit} className="modal-auth-form">
-          {loginMethod === 'mobile' ? (
-            <div className="form-group-phone">
-              <label>Phone Number</label>
-              <div className="phone-input-row">
-                <span className="country-code-pill">+91</span>
-                <input
-                  type="tel"
-                  required
-                  placeholder="Enter 10-digit number"
-                  maxLength={10}
-                  value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, ''))}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="form-group-standard">
-              <label>Email Address</label>
-              <div className="standard-input-row">
-                <Mail size={16} className="field-icon" />
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-          )}
-
           {mode === 'signup' && (
             <div className="form-group-standard">
-              <label>Full Name</label>
+              <label htmlFor="auth-fullname">Full Name</label>
               <div className="standard-input-row">
+                <User size={16} className="field-icon" />
                 <input
+                  id="auth-fullname"
                   type="text"
                   placeholder="Enter your name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
+                  autoComplete="name"
                 />
               </div>
             </div>
           )}
 
+          <div className="form-group-standard">
+            <label htmlFor="auth-email">Gmail / Email ID</label>
+            <div className="standard-input-row">
+              <Mail size={16} className="field-icon" />
+              <input
+                id="auth-email"
+                type="email"
+                required
+                placeholder="yourname@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                autoFocus
+              />
+            </div>
+          </div>
+
           {mode !== 'forgot' && (
             <div className="form-group-standard">
               <div className="label-row-between">
-                <label>Password</label>
+                <label htmlFor="auth-password">Password</label>
                 {mode === 'login' && (
                   <button
                     type="button"
@@ -282,16 +261,19 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
               <div className="standard-input-row">
                 <Lock size={16} className="field-icon" />
                 <input
+                  id="auth-password"
                   type={showPassword ? 'text' : 'password'}
                   required
-                  placeholder="Enter password"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
                 />
                 <button
                   type="button"
                   className="eye-toggle-btn"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -302,26 +284,29 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
           {mode === 'signup' && (
             <>
               <div className="form-group-standard">
-                <label>Confirm Password</label>
+                <label htmlFor="auth-confirm-password">Confirm Password</label>
                 <div className="standard-input-row">
-                  <Lock size={16} className="field-icon" />
+                  <KeyRound size={16} className="field-icon" />
                   <input
+                    id="auth-confirm-password"
                     type={showPassword ? 'text' : 'password'}
                     required
-                    placeholder="Confirm password"
+                    placeholder="••••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    autoComplete="new-password"
                   />
                 </div>
               </div>
 
               <div className="form-group-standard">
-                <label>Invite Code</label>
+                <label htmlFor="auth-invite-code">Invitation Code (Optional)</label>
                 <div className="standard-input-row">
                   <Gift size={16} className="field-icon" />
                   <input
+                    id="auth-invite-code"
                     type="text"
-                    placeholder="Enter referral code"
+                    placeholder="MAANWIN"
                     value={inviteCode}
                     onChange={(e) => setInviteCode(e.target.value)}
                   />
@@ -330,7 +315,7 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
 
               <div className="privacy-check-row">
                 <ShieldCheck size={16} className="check-icon" />
-                <span>I have read and agree to the User Agreement and Privacy Policy</span>
+                <span>By signing up, you agree to 18+ Responsible Gaming and Privacy Terms.</span>
               </div>
             </>
           )}
@@ -341,13 +326,13 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
             disabled={loading}
           >
             {loading ? (
-              <span className="submit-loading-text">Processing...</span>
+              <span className="submit-loading-text">Connecting to Supabase...</span>
             ) : (
               <span className="submit-content">
                 <span>
-                  {mode === 'login' && 'Log In'}
-                  {mode === 'signup' && 'Register Now'}
-                  {mode === 'forgot' && 'Send Reset Link'}
+                  {mode === 'login' && 'Sign In with Gmail'}
+                  {mode === 'signup' && 'Create Account with Gmail'}
+                  {mode === 'forgot' && 'Send Reset Link to Gmail'}
                 </span>
                 <ArrowRight size={16} />
               </span>
@@ -364,6 +349,32 @@ export function AuthModal({ isOpen, initialMode, onClose }: AuthModalProps) {
             </button>
           )}
         </form>
+
+        <div className="modal-footer-hint">
+          {mode === 'login' ? (
+            <p>
+              Don't have an account?{' '}
+              <button
+                type="button"
+                className="link-switch"
+                onClick={() => switchMode('signup')}
+              >
+                Sign Up here
+              </button>
+            </p>
+          ) : (
+            <p>
+              Already have an account?{' '}
+              <button
+                type="button"
+                className="link-switch"
+                onClick={() => switchMode('login')}
+              >
+                Sign In here
+              </button>
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
