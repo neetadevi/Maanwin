@@ -33,25 +33,37 @@ export interface BannerItem {
   subtitle: string;
 }
 
-// Banners
+// Banners matching live maanwin2.com
 export const BANNERS: BannerItem[] = [
   {
     id: 1,
-    img: getAssetUrl('images/banner1.webp'),
+    img: getAssetUrl('img/6015/banner/123245682-142073-file_20260920123245625.webp'),
     title: 'YOUR GAMING, OUR PRIORITY!',
     subtitle: '24/7 SUPPORT · FAST SERVICE · EXCITING GAMES!'
   },
   {
     id: 2,
-    img: getAssetUrl('images/banner2.webp'),
+    img: getAssetUrl('img/6015/banner/034552926-203051-file_20261023154552846.webp'),
     title: 'FIRST DEPOSIT BONUS 100%',
     subtitle: 'Deposit now and get up to ₹10,000 extra cash!'
   },
   {
     id: 3,
-    img: getAssetUrl('images/banner3.webp'),
+    img: getAssetUrl('img/6015/banner/110415258-141961-file_20260920110415198.webp'),
     title: 'VIP REWARDS & CASHBACK',
     subtitle: 'Daily rebate and instant VIP level upgrades!'
+  },
+  {
+    id: 4,
+    img: getAssetUrl('img/6015/banner/110119748-141955-file_20260920110119701.webp'),
+    title: 'MEGA JACKPOT TOURNAMENT',
+    subtitle: 'Play selected slots & win pool of 1 Crore!'
+  },
+  {
+    id: 5,
+    img: getAssetUrl('img/6015/banner/021640702-189919-file_20261018141640624.webp'),
+    title: 'DAILY LUCKY WHEEL',
+    subtitle: 'Spin daily & win instant cash prizes!'
   }
 ];
 

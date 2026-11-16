@@ -23,58 +23,69 @@ export function BalanceCard({ onOpenAuth, onNavigateTab }: BalanceCardProps) {
   const mainPart = parts[0];
   const subPart = parts[1] ? `.${parts[1]}` : '.00';
 
-  const handleDeposit = () => {
-    if (!user) {
-      onOpenAuth('login');
-    } else {
-      onNavigateTab('wallet');
-    }
-  };
-
-  const handleWithdraw = () => {
-    if (!user) {
-      onOpenAuth('login');
-    } else {
-      onNavigateTab('wallet');
-    }
-  };
-
   return (
-    <section className="s11-balance">
+    <section className="s11-balance side-distance s11-home__balance">
       <div className="s11-balance__info">
         <div className={`s11-balance__avatar ${!user ? 'is-guest' : ''}`}>
           <img
             src={getAssetUrl('images/s11_avatar_guest-BGtBCBp9.svg')}
-            alt="Avatar"
+            alt=""
             loading="eager"
+            decoding="async"
           />
         </div>
         <div className="s11-balance__text">
-          <p className="s11-balance__label">Total Balance</p>
-          <div className="s11-balance__amount">
-            <span className="s11-balance__amount-main">₹ {user ? mainPart : '0'}</span>
-            <span className="s11-balance__amount-sub">{user ? subPart : '.00'}</span>
-          </div>
+          <p className="s11-balance__label">Your Balance</p>
+          <p className="s11-balance__amount">
+            {user ? (
+              <>
+                <span className="s11-balance__amount-main">₹ {mainPart}</span>
+                <span className="s11-balance__amount-sub">{subPart}</span>
+              </>
+            ) : (
+              <span className="s11-balance__amount-main">---</span>
+            )}
+          </p>
         </div>
       </div>
 
       <div className="s11-balance__actions">
-        <button
-          type="button"
-          className="s11-balance__btn s11-balance__btn--primary"
-          onClick={handleDeposit}
-        >
-          Deposit
-        </button>
-        <button
-          type="button"
-          className="s11-balance__btn s11-balance__btn--secondary"
-          onClick={handleWithdraw}
-        >
-          Withdraw
-        </button>
+        {user ? (
+          <>
+            <button
+              type="button"
+              className="s11-balance__btn s11-balance__btn--primary"
+              onClick={() => onNavigateTab('wallet')}
+            >
+              Deposit
+            </button>
+            <button
+              type="button"
+              className="s11-balance__btn s11-balance__btn--secondary"
+              onClick={() => onNavigateTab('wallet')}
+            >
+              Withdraw
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="s11-balance__btn s11-balance__btn--primary"
+              onClick={() => onOpenAuth('signup')}
+            >
+              Register
+            </button>
+            <button
+              type="button"
+              className="s11-balance__btn s11-balance__btn--secondary"
+              onClick={() => onOpenAuth('login')}
+            >
+              Login
+            </button>
+          </>
+        )}
       </div>
     </section>
   );
 }
-

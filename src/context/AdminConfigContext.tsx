@@ -55,8 +55,8 @@ const DEFAULT_CONFIG: AdminConfig = {
   upiQrUrl: '',
   telegramUrl: 'https://t.me/maan_win',
   whatsappUrl: 'https://whatsapp.com/channel/0029Vb8IHU0AojYq6RyVDG3s',
-  noticeEn: '🔔 Welcome to Maanwin! YOUR GAMING, OUR PRIORITY! 24/7 SUPPORT · FAST SERVICE · EXCITING GAMES! Download our official app for exclusive VIP bonuses and instant withdrawal!',
-  noticeHi: '🔔 मान्विन में आपका स्वागत है! आपका गेमिंग, हमारी प्राथमिकता! 24/7 सहायता · तेज सर्विस · रोमांचक गेम्स! विशेष वीआईपी बोनस और तत्काल निकासी के लिए हमारा आधिकारिक ऐप डाउनलोड करें!',
+  noticeEn: '✨ START YOUR MAAN.WIN JOURNEY ✨',
+  noticeHi: '✨ मान्विन के साथ अपनी शानदार यात्रा शुरू करें ✨',
   banners: BANNERS,
   winners: INITIAL_WINNERS,
   userBalances: {

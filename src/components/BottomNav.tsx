@@ -19,17 +19,20 @@ export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: Bo
   return (
     <div className="s11-tabbar-container">
       <div className="s11-tabbar">
-        {/* Glow & Dock */}
+        {/* Dock background & Glow */}
         <i className="s11-tabbar__dock" aria-hidden="true" />
         <i className="s11-tabbar__glow" aria-hidden="true" />
         <img
           className="s11-tabbar__bg"
           src={getAssetUrl('images/s11_tab_bg-Vd4rQYLh.svg')}
           alt=""
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
         />
 
         <div className="s11-tabbar__items">
-          {/* Left Side: Home & Activity */}
+          {/* Left Side: Home & Promo */}
           <div className="s11-tabbar__side">
             <button
               type="button"
@@ -43,7 +46,10 @@ export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: Bo
                     ? 'images/s11_tab_home_sel-DZhrwbpl.svg'
                     : 'images/s11_tab_home_nor-PFLWSLys.svg'
                 )}
-                alt="Home"
+                alt=""
+                aria-hidden="true"
+                loading="eager"
+                decoding="async"
               />
               <span className="s11-tabbar__text">Home</span>
             </button>
@@ -60,49 +66,35 @@ export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: Bo
                     ? 'images/s11_tab_activity_sel-DgPThJy4.svg'
                     : 'images/s11_tab_activity_nor-BtRJSqsp.svg'
                 )}
-                alt="Activity"
+                alt=""
+                aria-hidden="true"
+                loading="eager"
+                decoding="async"
               />
-              <span className="s11-tabbar__text">Activity</span>
+              <span className="s11-tabbar__text">Promo</span>
             </button>
           </div>
 
-          {/* Center Floating Chest Button */}
-          <button
-            type="button"
-            className="s11-tabbar__chest"
-            aria-label="Lucky Bonus"
-            onClick={() => {
-              if (!isLoggedIn) {
-                onOpenAuth('login');
-              } else {
-                onSelectTab('activity');
-              }
-            }}
-          >
-            <img
-              className="s11-tabbar__chest-anim"
-              src={getAssetUrl('images/s11_chest_anim-Bq793_Bz.webp')}
-              alt="Bonus Chest"
-            />
-          </button>
-
-          {/* Right Side: Promotion & Mine */}
+          {/* Right Side: Earn & Profile */}
           <div className="s11-tabbar__side">
             <button
               type="button"
-              className={`s11-tabbar__item ${activeTab === 'promotion' ? 'is-active' : ''}`}
-              onClick={() => handleTabClick('promotion')}
+              className={`s11-tabbar__item ${activeTab === 'wallet' ? 'is-active' : ''}`}
+              onClick={() => handleTabClick('wallet')}
             >
               <img
                 className="s11-tabbar__icon"
                 src={getAssetUrl(
-                  activeTab === 'promotion'
+                  activeTab === 'wallet'
                     ? 'images/s11_tab_wallet_sel-DsPeGhwb.svg'
                     : 'images/s11_tab_wallet_nor-DbYvdA44.svg'
                 )}
-                alt="Promotion"
+                alt=""
+                aria-hidden="true"
+                loading="eager"
+                decoding="async"
               />
-              <span className="s11-tabbar__text">Promotion</span>
+              <span className="s11-tabbar__text">Earn</span>
             </button>
 
             <button
@@ -117,12 +109,35 @@ export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: Bo
                     ? 'images/s11_tab_profile_sel-BoCwkzfF.svg'
                     : 'images/s11_tab_profile_nor-BL0XsIKW.svg'
                 )}
-                alt="Mine"
+                alt=""
+                aria-hidden="true"
+                loading="eager"
+                decoding="async"
               />
-              <span className="s11-tabbar__text">Mine</span>
+              <span className="s11-tabbar__text">Profile</span>
             </button>
           </div>
         </div>
+
+        {/* Center Floating Chest Button */}
+        <button
+          type="button"
+          className="s11-tabbar__chest"
+          aria-label="Share"
+          onClick={() => {
+            if (!isLoggedIn) {
+              onOpenAuth('login');
+            } else {
+              onSelectTab('activity');
+            }
+          }}
+        >
+          <img
+            className="s11-tabbar__chest-anim"
+            src={getAssetUrl('images/s11_chest_anim-Bq793_Bz.webp')}
+            alt="Bonus Chest"
+          />
+        </button>
       </div>
     </div>
   );

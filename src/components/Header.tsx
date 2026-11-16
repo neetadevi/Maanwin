@@ -18,13 +18,20 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab }: Header
 
   return (
     <header className="s11-header">
-      {/* Brand Logo */}
-      <div className="s11-header__logo" onClick={() => onNavigateTab && onNavigateTab('home')}>
+      {/* Brand Logo - exact downloaded live logo */}
+      <div
+        className="s11-header__logo"
+        onClick={() => onNavigateTab && onNavigateTab('home')}
+      >
         <img
-          src={getAssetUrl('images/logo.webp')}
+          src={getAssetUrl('img/6015/other/083305135-140407-file_20260919083305130.webp')}
           alt="Maanwin"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = 'https://maanwin2.com/img/6015/other/083305135-140407-file_20260919083305130.webp';
+            (e.currentTarget as HTMLImageElement).src =
+              'https://maanwin2.com/img/6015/other/083305135-140407-file_20260919083305130.webp';
           }}
         />
       </div>
@@ -53,18 +60,19 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab }: Header
         <button
           className="s11-header__bell"
           type="button"
-          aria-label="Notification"
+          aria-label="Message"
           onClick={() => alert(lang === 'en' ? 'No new notifications' : 'कोई नई सूचना नहीं है')}
         >
           <img
             className="s11-header__bell-icon"
             src={getAssetUrl('images/s11_icon_bell-BqXm-Mh1.svg')}
-            alt="Notification"
+            alt=""
+            loading="eager"
+            decoding="async"
           />
-          <i className="s11-header__dot" aria-hidden="true" />
         </button>
 
-        {/* Guest or User */}
+        {/* Guest or User actions */}
         {!user ? (
           <div className="s11-header__auth-btns">
             <button
@@ -98,11 +106,6 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab }: Header
             <span style={{ fontSize: '0.32rem', fontWeight: 700, color: 'var(--main_color, #F97316)' }}>
               ₹ {balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
-            <img
-              src={getAssetUrl('images/s11_avatar_guest-BGtBCBp9.svg')}
-              alt="User"
-              style={{ width: '0.64rem', height: '0.64rem', borderRadius: '50%' }}
-            />
           </div>
         )}
       </div>

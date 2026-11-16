@@ -8,6 +8,7 @@ import { NoticeBar } from './components/NoticeBar';
 import { EntriesSection } from './components/EntriesSection';
 import { PopularSection } from './components/PopularSection';
 import { CategoryNav } from './components/CategoryNav';
+import { FeaturedSection } from './components/FeaturedSection';
 import { WingoWidget } from './components/WingoWidget';
 import { GamesGrid } from './components/GamesGrid';
 import { WinningSection } from './components/WinningSection';
@@ -138,6 +139,9 @@ export default function App() {
                 lang={lang}
               />
             </div>
+
+            {/* Featured Games Carousel Strip */}
+            <FeaturedSection onPlayGame={handlePlayGame} />
 
             {/* If Lottery is active, show the interactive Win Go widget! */}
             {(activeCategoryCode.includes('Lottery') || activeCategoryCode === 'C202505220412050186') && (
