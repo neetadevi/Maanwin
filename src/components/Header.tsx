@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useAdminConfig } from '../context/AdminConfigContext';
 import { getAssetUrl } from '../utils/assetUrl';
-import { Download, Globe, Wallet, User as UserIcon, LogIn, UserPlus } from 'lucide-react';
 
 interface HeaderProps {
   onOpenAuth: (mode: 'login' | 'signup') => void;
@@ -14,105 +12,99 @@ interface HeaderProps {
 export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab }: HeaderProps) {
   const { user } = useAuth();
   const { getUserBalance } = useAdminConfig();
-  const [showUserDropdown, setShowUserDropdown] = useState(false);
 
-  // Compute live user balance from admin config: check by ID, phone, or email
   const userKey = user?.id || user?.user_metadata?.phone || user?.email;
   const balance = getUserBalance(userKey) || getUserBalance(user?.email) || getUserBalance(user?.id) || 0;
 
   return (
-    <header className="site-header">
-      <div className="header-inner">
-        {/* Brand Logo */}
-        <div className="logo-container">
+    <header className="s11-header">
+      {/* Brand Logo */}
+      <div className="s11-header__logo" onClick={() => onNavigateTab && onNavigateTab('home')}>
+        <img
+          src={getAssetUrl('images/logo.webp')}
+          alt="Maanwin"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = 'https://maanwin2.com/img/6015/other/083305135-140407-file_20260919083305130.webp';
+          }}
+        />
+      </div>
+
+      {/* Header Actions */}
+      <div className="s11-header__actions">
+        {/* Language switch */}
+        <button
+          type="button"
+          onClick={onToggleLang}
+          style={{
+            background: 'rgba(255, 255, 255, 0.08)',
+            border: 'none',
+            borderRadius: '0.2rem',
+            padding: '0.1rem 0.2rem',
+            color: '#fff',
+            fontSize: '0.28rem',
+            fontWeight: 600,
+            cursor: 'pointer'
+          }}
+        >
+          {lang === 'en' ? 'EN' : 'हि'}
+        </button>
+
+        {/* Bell Notification */}
+        <button
+          className="s11-header__bell"
+          type="button"
+          aria-label="Notification"
+          onClick={() => alert(lang === 'en' ? 'No new notifications' : 'कोई नई सूचना नहीं है')}
+        >
           <img
-            src={getAssetUrl('images/logo.webp')}
-            alt="Maanwin"
-            className="brand-logo"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = 'https://maanwin2.com/img/6015/other/083305135-140407-file_20260919083305130.webp';
-            }}
+            className="s11-header__bell-icon"
+            src={getAssetUrl('images/s11_icon_bell-BqXm-Mh1.svg')}
+            alt="Notification"
           />
-        </div>
+          <i className="s11-header__dot" aria-hidden="true" />
+        </button>
 
-        {/* Action Controls */}
-        <div className="header-actions">
-          {/* Language Switch */}
-          <button
-            type="button"
-            className="header-icon-btn lang-btn"
-            onClick={onToggleLang}
-            title={lang === 'en' ? 'Switch to Hindi' : 'Switch to English'}
+        {/* Guest or User */}
+        {!user ? (
+          <div className="s11-header__auth-btns">
+            <button
+              type="button"
+              className="s11-header__btn-login"
+              onClick={() => onOpenAuth('login')}
+            >
+              Log in
+            </button>
+            <button
+              type="button"
+              className="s11-header__btn-register"
+              onClick={() => onOpenAuth('signup')}
+            >
+              Register
+            </button>
+          </div>
+        ) : (
+          <div
+            onClick={() => onNavigateTab && onNavigateTab('mine')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.16rem',
+              cursor: 'pointer',
+              background: 'rgba(255,255,255,0.06)',
+              padding: '0.08rem 0.2rem',
+              borderRadius: '0.3rem'
+            }}
           >
-            <Globe size={18} />
-            <span className="lang-text">{lang === 'en' ? 'EN' : 'हि'}</span>
-          </button>
-
-          {/* Download App */}
-          <a
-            href="https://maanwin2.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="header-icon-btn download-btn"
-            title="Download App"
-          >
-            <Download size={18} />
-            <span className="btn-label-desktop">App</span>
-          </a>
-
-          {/* User state */}
-          {user ? (
-            <div className="user-logged-box">
-              <div className="balance-pill" onClick={() => onNavigateTab && onNavigateTab('wallet')}>
-                <Wallet size={16} className="wallet-icon" />
-                <span className="currency">₹</span>
-                <span className="balance-amt">
-                  {balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </span>
-              </div>
-
-              <div
-                className="user-profile-btn"
-                onClick={() => {
-                  setShowUserDropdown(!showUserDropdown);
-                  if (onNavigateTab) onNavigateTab('mine');
-                }}
-              >
-                <div className="avatar-circle">
-                  <UserIcon size={18} />
-                </div>
-              </div>
-
-              {/* Deposit Quick Button */}
-              <button
-                type="button"
-                className="btn-deposit-header"
-                onClick={() => onNavigateTab && onNavigateTab('wallet')}
-              >
-                Deposit
-              </button>
-            </div>
-          ) : (
-            <div className="guest-actions">
-              <button
-                type="button"
-                className="btn-header-login"
-                onClick={() => onOpenAuth('login')}
-              >
-                <LogIn size={15} />
-                <span>Log In</span>
-              </button>
-              <button
-                type="button"
-                className="btn-header-register"
-                onClick={() => onOpenAuth('signup')}
-              >
-                <UserPlus size={15} />
-                <span>Register</span>
-              </button>
-            </div>
-          )}
-        </div>
+            <span style={{ fontSize: '0.32rem', fontWeight: 700, color: 'var(--main_color, #F97316)' }}>
+              ₹ {balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
+            <img
+              src={getAssetUrl('images/s11_avatar_guest-BGtBCBp9.svg')}
+              alt="User"
+              style={{ width: '0.64rem', height: '0.64rem', borderRadius: '50%' }}
+            />
+          </div>
+        )}
       </div>
     </header>
   );

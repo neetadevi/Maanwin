@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { GameItem } from '../data/gamesData';
-import { Play, Search, Flame } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetUrl';
 
 interface GamesGridProps {
   games: GameItem[];
@@ -11,79 +11,93 @@ interface GamesGridProps {
 export function GamesGrid({ games, categoryTitle, onPlayGame }: GamesGridProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredGames = games.filter((g) =>
-    g.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    g.vendorCode.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredGames = games.filter(
+    (g) =>
+      g.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      g.vendorCode.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <section className="games-section">
-      <div className="section-header-row">
-        <div className="section-title-wrap">
-          <span className="title-accent-bar" />
-          <h2 className="section-title">{categoryTitle} Games</h2>
-          <span className="games-count">({filteredGames.length})</span>
-        </div>
-
-        <div className="search-box-wrap">
-          <Search size={16} className="search-icon" />
-          <input
-            type="text"
-            placeholder="Search game..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="game-search-input"
-          />
-        </div>
-      </div>
-
-      <div className="games-grid">
-        {filteredGames.map((game) => (
-          <div
-            key={game.gameId}
-            className="game-card"
-            onClick={() => onPlayGame(game)}
-          >
-            <div className="game-thumb-wrapper">
-              <img
-                src={game.img}
-                alt={game.name}
-                className="game-thumb-img"
-                loading="lazy"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = 'https://maanwin2.com/img/0/gamelogo/SPRIBE/aviator.png';
-                }}
-              />
-
-              {/* Badges */}
-              {game.hot && (
-                <div className="badge-hot">
-                  <Flame size={12} />
-                  <span>HOT</span>
-                </div>
-              )}
-
-              {/* Hover Play Button */}
-              <div className="game-overlay">
-                <button type="button" className="btn-play-circle" aria-label={`Play ${game.name}`}>
-                  <Play size={20} fill="#fff" />
-                </button>
-              </div>
-            </div>
-
-            <div className="game-info">
-              <span className="game-name" title={game.name}>{game.name}</span>
-              <span className="game-vendor">{game.vendorCode}</span>
-            </div>
+    <div className="s11-home__sections">
+      <section className="s11-section">
+        <header className="s11-section__head">
+          <div className="s11-section__title">
+            <span style={{ fontSize: '0.42rem' }}>🎲</span>
+            <h3 className="s11-section__title-text">{categoryTitle}</h3>
+            <span style={{ fontSize: '0.28rem', color: 'var(--text_secondary, #9CA3AF)', marginLeft: '0.1rem' }}>
+              ({filteredGames.length})
+            </span>
           </div>
-        ))}
-      </div>
 
-      {filteredGames.length === 0 && (
-        <div className="no-games-found">
-          <p>No games found matching "{searchTerm}"</p>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                height: '0.64rem',
+                padding: '0 0.2rem',
+                borderRadius: '0.16rem',
+                border: '1px solid var(--Dividing_line_color, #253248)',
+                background: 'var(--bg_color_L2, #12192A)',
+                color: '#fff',
+                fontSize: '0.28rem',
+                outline: 'none',
+                width: '2.5rem'
+              }}
+            />
+          </div>
+        </header>
+
+        <div className="s11-section__grid">
+          {filteredGames.map((game) => (
+            <article
+              key={game.gameId}
+              className="s11-section__card"
+              onClick={() => onPlayGame(game)}
+            >
+              <div className="s11-section__cover">
+                <img
+                  src={getAssetUrl(game.img)}
+                  alt={game.name}
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src =
+                      'https://maanwin2.com/img/0/gamelogo/SPRIBE/aviator.png';
+                  }}
+                />
+                {game.hot && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '0.08rem',
+                      left: '0.08rem',
+                      background: 'var(--norm_red_color, #FB5B5B)',
+                      color: '#fff',
+                      fontSize: '0.22rem',
+                      fontWeight: 700,
+                      padding: '0.02rem 0.12rem',
+                      borderRadius: '0.08rem'
+                    }}
+                  >
+                    HOT
+                  </span>
+                )}
+              </div>
+              <p className="s11-section__card-name" title={game.name}>
+                {game.name}
+              </p>
+            </article>
+          ))}
         </div>
-      )}
-    </section>
+
+        {filteredGames.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '1rem', color: '#9CA3AF', fontSize: '0.32rem' }}>
+            No games found matching "{searchTerm}"
+          </div>
+        )}
+      </section>
+    </div>
   );
 }

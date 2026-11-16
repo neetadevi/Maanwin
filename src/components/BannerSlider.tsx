@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useAdminConfig } from '../context/AdminConfigContext';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export function BannerSlider() {
   const { config } = useAdminConfig();
@@ -15,59 +14,75 @@ export function BannerSlider() {
     return () => clearInterval(timer);
   }, [banners.length]);
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length);
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % banners.length);
-  };
-
   if (!banners || banners.length === 0) return null;
 
   return (
-    <div className="banner-slider">
-      <div
-        className="banner-track"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-      >
-        {banners.map((banner, index) => (
-          <div key={banner.id} className="banner-slide">
-            <img
-              src={banner.img}
-              alt={banner.title}
-              className="banner-image"
-              loading={index === 0 ? 'eager' : 'lazy'}
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = 'https://maanwin2.com/img/6015/banner/093136251-139478-file_20260918093136209.webp';
-              }}
-            />
-          </div>
-        ))}
-      </div>
-
-      {banners.length > 1 && (
-        <>
-          <button type="button" className="banner-nav-btn prev" onClick={prevSlide} aria-label="Previous Banner">
-            <ChevronLeft size={20} />
-          </button>
-          <button type="button" className="banner-nav-btn next" onClick={nextSlide} aria-label="Next Banner">
-            <ChevronRight size={20} />
-          </button>
-
-          <div className="banner-dots">
-            {banners.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                className={`dot ${index === currentIndex ? 'active' : ''}`}
-                onClick={() => setCurrentIndex(index)}
-                aria-label={`Go to slide ${index + 1}`}
-              />
+    <div className="s11-home__banner">
+      <div className="s11-hero">
+        <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '0.26667rem' }}>
+          <div
+            style={{
+              display: 'flex',
+              transition: 'transform 0.4s ease-out',
+              transform: `translateX(-${currentIndex * 100}%)`,
+              width: '100%'
+            }}
+          >
+            {banners.map((banner, index) => (
+              <div key={banner.id} style={{ minWidth: '100%', flex: '0 0 100%' }}>
+                <img
+                  src={banner.img}
+                  alt={banner.title}
+                  className="s11-hero__image is-loaded"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  style={{
+                    width: '100%',
+                    display: 'block',
+                    aspectRatio: '1.9714286',
+                    objectFit: 'cover',
+                    borderRadius: '0.26667rem'
+                  }}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src =
+                      'https://maanwin2.com/img/6015/banner/093136251-139478-file_20260918093136209.webp';
+                  }}
+                />
+              </div>
             ))}
           </div>
-        </>
-      )}
+
+          {/* Dots Indicator */}
+          {banners.length > 1 && (
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '0.2rem',
+                left: 0,
+                right: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '0.12rem',
+                zIndex: 2
+              }}
+            >
+              {banners.map((_, index) => (
+                <span
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  style={{
+                    width: index === currentIndex ? '0.4rem' : '0.16rem',
+                    height: '0.16rem',
+                    borderRadius: '0.08rem',
+                    backgroundColor: index === currentIndex ? 'var(--main_color, #F97316)' : 'rgba(255,255,255,0.4)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

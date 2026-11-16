@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
 import { useAdminConfig } from './context/AdminConfigContext';
 import { Header } from './components/Header';
+import { BalanceCard } from './components/BalanceCard';
 import { BannerSlider } from './components/BannerSlider';
 import { NoticeBar } from './components/NoticeBar';
+import { EntriesSection } from './components/EntriesSection';
+import { PopularSection } from './components/PopularSection';
 import { CategoryNav } from './components/CategoryNav';
 import { WingoWidget } from './components/WingoWidget';
 import { GamesGrid } from './components/GamesGrid';
@@ -17,7 +20,7 @@ import { AdminPanel } from './components/AdminPanel';
 import { ActivityView, PromotionView, WalletView, MineView } from './components/TabsContent';
 import { CATEGORIES, type GameItem } from './data/gamesData';
 
-export function App() {
+export default function App() {
   const { user } = useAuth();
   const { config } = useAdminConfig();
 
@@ -70,6 +73,9 @@ export function App() {
     (c) => c.categoryCode === activeCategoryCode
   ) || CATEGORIES[0];
 
+  // All games flattened for popular section
+  const allGames = CATEGORIES.flatMap((c) => c.games);
+
   // If in Admin Mode, render the Admin Control Center
   if (isAdminRoute) {
     return (
@@ -96,18 +102,42 @@ export function App() {
       <main className="main-viewport">
         {activeTab === 'home' && (
           <div className="home-view-scroll">
+            {/* Balance Card */}
+            <BalanceCard
+              onOpenAuth={openAuth}
+              onNavigateTab={(tab) => setActiveTab(tab)}
+            />
+
             {/* Banner Slider */}
             <BannerSlider />
 
             {/* Scrolling Marquee Notice (Real-time synced with Admin) */}
             <NoticeBar lang={lang} />
 
-            {/* Category Navigation Tabs */}
-            <CategoryNav
-              activeCategory={activeCategoryCode}
-              onSelectCategory={setActiveCategoryCode}
-              lang={lang}
+            {/* Entries: Daily Check-in & Lucky Wheel */}
+            <EntriesSection
+              onOpenCheckin={() => (!user ? openAuth('login') : setActiveTab('activity'))}
+              onOpenWheel={() => (!user ? openAuth('login') : setActiveTab('activity'))}
             />
+
+            {/* Popular Games Scroller with Win-Rate Bar */}
+            <PopularSection
+              games={allGames}
+              onPlayGame={handlePlayGame}
+              onSeeMore={() => {
+                const el = document.getElementById('lobby-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+            />
+
+            {/* Category Navigation Lobby Grid */}
+            <div id="lobby-section">
+              <CategoryNav
+                activeCategory={activeCategoryCode}
+                onSelectCategory={setActiveCategoryCode}
+                lang={lang}
+              />
+            </div>
 
             {/* If Lottery is active, show the interactive Win Go widget! */}
             {(activeCategoryCode.includes('Lottery') || activeCategoryCode === 'C202505220412050186') && (
@@ -152,7 +182,7 @@ export function App() {
         </svg>
       </a>
 
-      {/* Bottom Navigation */}
+      {/* Floating Bottom Dock Navigation */}
       <BottomNav
         activeTab={activeTab}
         onSelectTab={setActiveTab}
@@ -160,25 +190,22 @@ export function App() {
         isLoggedIn={!!user}
       />
 
-      {/* Login & Register Modal */}
+      {/* Supabase Gmail ID + Password Auth Modal */}
       <AuthModal
         isOpen={authModalOpen}
         initialMode={authMode}
         onClose={() => setAuthModalOpen(false)}
       />
 
-      {/* Game Play Simulation Modal */}
-      <GamePlayModal
-        game={activeGame}
-        onClose={() => setActiveGame(null)}
-        isLoggedIn={!!user}
-        onPromptLogin={() => {
-          setActiveGame(null);
-          openAuth('login');
-        }}
-      />
+      {/* Simulated Game Play Modal */}
+      {activeGame && (
+        <GamePlayModal
+          game={activeGame}
+          onClose={() => setActiveGame(null)}
+          isLoggedIn={!!user}
+          onPromptLogin={() => openAuth('login')}
+        />
+      )}
     </div>
   );
 }
-
-export default App;
