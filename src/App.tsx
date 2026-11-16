@@ -8,9 +8,8 @@ import { NoticeBar } from './components/NoticeBar';
 import { EntriesSection } from './components/EntriesSection';
 import { PopularSection } from './components/PopularSection';
 import { CategoryNav } from './components/CategoryNav';
+import { AllSections } from './components/AllSections';
 import { FeaturedSection } from './components/FeaturedSection';
-import { WingoWidget } from './components/WingoWidget';
-import { GamesGrid } from './components/GamesGrid';
 import { WinningSection } from './components/WinningSection';
 import { VendorsSection } from './components/VendorsSection';
 import { Footer } from './components/Footer';
@@ -59,6 +58,7 @@ export default function App() {
   const [lang, setLang] = useState<'en' | 'hi'>('en');
 
   // Modals state
+  const [welcomeModalOpen, setWelcomeModalOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [activeGame, setActiveGame] = useState<GameItem | null>(null);
@@ -71,10 +71,6 @@ export default function App() {
   const handlePlayGame = (game: GameItem) => {
     setActiveGame(game);
   };
-
-  const currentCategory = CATEGORIES.find(
-    (c) => c.categoryCode === activeCategoryCode
-  ) || CATEGORIES[0];
 
   // All games flattened for popular section
   const allGames = CATEGORIES.flatMap((c) => c.games);
@@ -99,6 +95,7 @@ export default function App() {
         lang={lang}
         onToggleLang={() => setLang(lang === 'en' ? 'hi' : 'en')}
         onNavigateTab={(tab) => setActiveTab(tab)}
+        onOpenBell={() => setWelcomeModalOpen(true)}
       />
 
       {/* Main Tab Content */}
@@ -142,20 +139,15 @@ export default function App() {
               />
             </div>
 
+            {/* All Category Game Sections (Crash, Lottery, Slots, Sports, Fishing, Casino, Poker) */}
+            <AllSections
+              categories={CATEGORIES}
+              onPlayGame={handlePlayGame}
+              lang={lang}
+            />
+
             {/* Featured Games Carousel Strip */}
             <FeaturedSection onPlayGame={handlePlayGame} />
-
-            {/* If Lottery is active, show the interactive Win Go widget! */}
-            {(activeCategoryCode.includes('Lottery') || activeCategoryCode === 'C202505220412050186') && (
-              <WingoWidget onPlay={() => openAuth('login')} />
-            )}
-
-            {/* Games Grid for current category */}
-            <GamesGrid
-              games={currentCategory?.games || []}
-              categoryTitle={lang === 'hi' ? currentCategory?.name.hi : currentCategory?.name.en}
-              onPlayGame={handlePlayGame}
-            />
 
             {/* Live Winning Information (Synced with Admin) */}
             <WinningSection />
@@ -200,7 +192,11 @@ export default function App() {
       />
 
       {/* Welcome Bonus Modal (Get Free Spins & Bonus Alerts) */}
-      <WelcomeBonusModal onClaim={() => openAuth('signup')} />
+      <WelcomeBonusModal
+        isOpen={welcomeModalOpen}
+        onClose={() => setWelcomeModalOpen(false)}
+        onClaim={() => openAuth('signup')}
+      />
 
       {/* Supabase Gmail ID + Password Auth Modal */}
       <AuthModal

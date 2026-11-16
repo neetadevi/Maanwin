@@ -29,36 +29,44 @@ const CATEGORIES_DATA = [
     isWide: false
   },
   {
-    code: 'Casino',
-    name: { en: 'Casino', hi: 'कैसीनो' },
-    count: '215',
-    img: 'img/6015/gamecategory/100604614-121661-file_20260901100604613.webp',
-    isWide: false
-  },
-  {
     code: 'Sports',
     name: { en: 'Sports', hi: 'स्पोर्ट्स' },
-    count: '7',
+    count: '5',
     img: 'img/6015/gamecategory/100526039-121655-file_20260901100526037.webp',
-    isWide: false
-  },
-  {
-    code: 'Rummy',
-    name: { en: 'Rummy', hi: 'रम्मी' },
-    count: '31',
-    img: 'img/6015/gamecategory/100541436-121658-file_20260901100541435.webp',
     isWide: false
   },
   {
     code: 'Fishing',
     name: { en: 'Fishing', hi: 'फिशिंग' },
-    count: '38',
+    count: '44',
     img: 'img/6015/gamecategory/100555165-121659-file_20260901100555163.webp',
+    isWide: false
+  },
+  {
+    code: 'Casino',
+    name: { en: 'Casino', hi: 'कैसीनो' },
+    count: '641',
+    img: 'img/6015/gamecategory/100604614-121661-file_20260901100604613.webp',
+    isWide: false
+  },
+  {
+    code: 'Poker',
+    name: { en: 'Poker', hi: 'पोकर' },
+    count: '75',
+    img: 'img/6015/gamecategory/100541436-121658-file_20260901100541435.webp',
     isWide: false
   }
 ];
 
 export function CategoryNav({ activeCategory, onSelectCategory, lang }: CategoryNavProps) {
+  const handleClick = (code: string) => {
+    onSelectCategory(code);
+    const target = document.getElementById(`sec-${code.toLowerCase()}`);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <section className="s11-hub side-distance s11-home__hub">
       <header className="s11-hub__head">
@@ -85,7 +93,7 @@ export function CategoryNav({ activeCategory, onSelectCategory, lang }: Category
               className={`s11-hub__card ${cat.isWide ? 'is-wide' : ''} ${
                 isSelected ? 'is-highlight' : ''
               }`}
-              onClick={() => onSelectCategory(cat.code)}
+              onClick={() => handleClick(cat.code)}
             >
               <span className="s11-hub__badge">
                 <svg

@@ -7,9 +7,10 @@ interface HeaderProps {
   lang: 'en' | 'hi';
   onToggleLang: () => void;
   onNavigateTab?: (tab: string) => void;
+  onOpenBell?: () => void;
 }
 
-export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab }: HeaderProps) {
+export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab, onOpenBell }: HeaderProps) {
   const { user } = useAuth();
   const { getUserBalance } = useAdminConfig();
 
@@ -61,7 +62,7 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab }: Header
           className="s11-header__bell"
           type="button"
           aria-label="Message"
-          onClick={() => alert(lang === 'en' ? 'No new notifications' : 'कोई नई सूचना नहीं है')}
+          onClick={() => onOpenBell ? onOpenBell() : alert(lang === 'en' ? 'No new notifications' : 'कोई नई सूचना नहीं है')}
         >
           <img
             className="s11-header__bell-icon"

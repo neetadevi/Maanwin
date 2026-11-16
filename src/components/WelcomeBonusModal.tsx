@@ -1,35 +1,18 @@
-import { useState, useEffect } from 'react';
 import { getAssetUrl } from '../utils/assetUrl';
 
 interface WelcomeBonusModalProps {
+  isOpen: boolean;
+  onClose: () => void;
   onClaim: () => void;
 }
 
-export function WelcomeBonusModal({ onClaim }: WelcomeBonusModalProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    // Show automatically after 1.2s on page load if not closed in this session
-    const shown = sessionStorage.getItem('mw_welcome_shown');
-    if (!shown) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  const handleClose = () => {
-    setIsOpen(false);
-    sessionStorage.setItem('mw_welcome_shown', 'true');
-  };
+export function WelcomeBonusModal({ isOpen, onClose, onClaim }: WelcomeBonusModalProps) {
+  if (!isOpen) return null;
 
   const handleClaim = () => {
-    handleClose();
+    onClose();
     onClaim();
   };
-
-  if (!isOpen) return null;
 
   return (
     <div
@@ -45,7 +28,7 @@ export function WelcomeBonusModal({ onClaim }: WelcomeBonusModalProps) {
         justifyContent: 'center',
         padding: '0.4rem'
       }}
-      onClick={handleClose}
+      onClick={onClose}
     >
       <div
         style={{
@@ -63,7 +46,7 @@ export function WelcomeBonusModal({ onClaim }: WelcomeBonusModalProps) {
         {/* Close Button */}
         <button
           type="button"
-          onClick={handleClose}
+          onClick={onClose}
           style={{
             position: 'absolute',
             top: '0.3rem',
