@@ -198,3 +198,4 @@ export function AllSections({ categories, onPlayGame, lang }: AllSectionsProps) 
     </div>
   );
 }
+

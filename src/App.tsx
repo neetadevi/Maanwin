@@ -10,9 +10,6 @@ import { PopularSection } from './components/PopularSection';
 import { CategoryNav } from './components/CategoryNav';
 import { AllSections } from './components/AllSections';
 import { FeaturedSection } from './components/FeaturedSection';
-import { WinningSection } from './components/WinningSection';
-import { VendorsSection } from './components/VendorsSection';
-import { Footer } from './components/Footer';
 import { BottomNav } from './components/BottomNav';
 import { PwaBanner } from './components/PwaBanner';
 import { WelcomeBonusModal } from './components/WelcomeBonusModal';
@@ -69,6 +66,10 @@ export default function App() {
   };
 
   const handlePlayGame = (game: GameItem) => {
+    if (!user) {
+      openAuth('login');
+      return;
+    }
     setActiveGame(game);
   };
 
@@ -149,14 +150,8 @@ export default function App() {
             {/* Featured Games Carousel Strip */}
             <FeaturedSection onPlayGame={handlePlayGame} />
 
-            {/* Live Winning Information (Synced with Admin) */}
-            <WinningSection />
-
-            {/* Platform Partners / Vendors */}
-            <VendorsSection />
-
-            {/* Trust Badges & Footer */}
-            <Footer />
+            {/* Bottom spacer for dock */}
+            <div style={{ height: '2.5rem' }} />
           </div>
         )}
 

@@ -17,13 +17,42 @@ export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: Bo
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Sprite frames for the gold treasure chest opening & sparkling
+    const frames = [
+      { sx: 420, sy: 278, sw: 175, sh: 162 }, // Closed chest
+      { sx: 215, sy: 278, sw: 175, sh: 162 }, // Starting to open
+      { sx: 15, sy: 278, sw: 175, sh: 162 },  // Half open
+      { sx: 260, sy: 15, sw: 175, sh: 165 },  // Fully open with glowing gems
+      { sx: 460, sy: 15, sw: 175, sh: 165 },  // Sparkling
+      { sx: 660, sy: 15, sw: 175, sh: 165 }   // Radiant gold treasure
+    ];
+
+    let currentFrame = 0;
+    let isMounted = true;
+    let timer: ReturnType<typeof setInterval> | null = null;
+
     const img = new Image();
     img.src = getAssetUrl('images/s11_chest_anim-Bq793_Bz.webp');
-    img.onload = () => {
+
+    const render = () => {
+      if (!ctx || !canvas) return;
+      const f = frames[currentFrame];
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // Source coords for closed glowing treasure chest:
-      // sx: 420, sy: 278, sWidth: 175, sHeight: 162
-      ctx.drawImage(img, 420, 278, 175, 162, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, f.sx, f.sy, f.sw, f.sh, 0, 0, canvas.width, canvas.height);
+    };
+
+    img.onload = () => {
+      render();
+      timer = setInterval(() => {
+        if (!isMounted) return;
+        currentFrame = (currentFrame + 1) % frames.length;
+        render();
+      }, 500);
+    };
+
+    return () => {
+      isMounted = false;
+      if (timer) clearInterval(timer);
     };
   }, []);
 
@@ -138,11 +167,11 @@ export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: Bo
           </div>
         </div>
 
-        {/* Center Floating Chest Button */}
+        {/* Center Floating Chest Button with Live Animation */}
         <button
           type="button"
-          className="s11-tabbar__chest"
-          aria-label="Share"
+          className="s11-tabbar__chest s11-chest-animated"
+          aria-label="Share & Bonus"
           onClick={() => {
             if (!isLoggedIn) {
               onOpenAuth('login');
