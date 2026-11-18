@@ -18,7 +18,7 @@ export function EntriesSection({ onOpenCheckin, onOpenWheel }: EntriesSectionPro
       >
         <img
           className="s11-entries__art s11-entries__art--checkin"
-          src={getAssetUrl('assets/ar_saas11/home/s11_entry_checkin-9d27a9de.webp')}
+          src={getAssetUrl('images/user_assets/daily_check.png')}
           alt=""
           loading="lazy"
           decoding="async"
@@ -46,7 +46,7 @@ export function EntriesSection({ onOpenCheckin, onOpenWheel }: EntriesSectionPro
       >
         <img
           className="s11-entries__art s11-entries__art--wheel"
-          src={getAssetUrl('assets/ar_saas11/home/s11_entry_wheel-f541e8ee.webp')}
+          src={getAssetUrl('images/user_assets/deposit_wheel.png')}
           alt=""
           loading="lazy"
           decoding="async"

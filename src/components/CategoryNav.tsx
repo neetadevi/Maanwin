@@ -11,49 +11,49 @@ const CATEGORIES_DATA = [
     code: 'Crash',
     name: { en: 'Crash', hi: 'क्रैश' },
     count: '49',
-    img: 'img/6015/gamecategory/100515254-121653-file_20260901100515253.webp',
+    img: 'images/user_assets/your_games_crash.png',
     isWide: true
   },
   {
     code: 'Lottery',
     name: { en: 'Lottery', hi: 'लॉटरी' },
     count: '13',
-    img: 'img/6015/gamecategory/100453486-121649-file_20260901100453484.webp',
+    img: 'images/user_assets/your_games_lottery.png',
     isWide: true
   },
   {
     code: 'Slots',
     name: { en: 'Slots', hi: 'स्लॉट्स' },
     count: '2106',
-    img: 'img/6015/gamecategory/100503844-121651-file_20260901100503843.webp',
+    img: 'images/user_assets/your_games_slots.png',
     isWide: false
   },
   {
     code: 'Sports',
     name: { en: 'Sports', hi: 'स्पोर्ट्स' },
     count: '5',
-    img: 'img/6015/gamecategory/100526039-121655-file_20260901100526037.webp',
+    img: 'images/user_assets/your_games_sports.png',
     isWide: false
   },
   {
     code: 'Fishing',
     name: { en: 'Fishing', hi: 'फिशिंग' },
     count: '44',
-    img: 'img/6015/gamecategory/100555165-121659-file_20260901100555163.webp',
+    img: 'images/user_assets/your_games_fishing.png',
     isWide: false
   },
   {
     code: 'Casino',
     name: { en: 'Casino', hi: 'कैसीनो' },
     count: '641',
-    img: 'img/6015/gamecategory/100604614-121661-file_20260901100604613.webp',
+    img: 'images/user_assets/your_games_casino.png',
     isWide: false
   },
   {
     code: 'Poker',
     name: { en: 'Poker', hi: 'पोकर' },
     count: '75',
-    img: 'img/6015/gamecategory/100541436-121658-file_20260901100541435.webp',
+    img: 'images/user_assets/your_games_poker.png',
     isWide: false
   }
 ];

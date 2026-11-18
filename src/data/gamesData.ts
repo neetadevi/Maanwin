@@ -37,12 +37,18 @@ export interface BannerItem {
 export const BANNERS: BannerItem[] = [
   {
     id: 1,
+    img: getAssetUrl('images/user_assets/deposit_bonus_banner.png'),
+    title: 'FIRST DEPOSIT BONUS 10%',
+    subtitle: 'Deposit now and get up to ₹10,000 extra bonus!'
+  },
+  {
+    id: 2,
     img: getAssetUrl('img/6015/banner/034552926-203051-file_20261023154552846.webp'),
     title: 'FIRST DEPOSIT BONUS 100%',
     subtitle: 'Deposit now and get up to ₹10,000 extra cash!'
   },
   {
-    id: 2,
+    id: 3,
     img: getAssetUrl('img/6015/banner/123245682-142073-file_20260920123245625.webp'),
     title: 'YOUR GAMING, OUR PRIORITY!',
     subtitle: '24/7 SUPPORT · FAST SERVICE · EXCITING GAMES!'
@@ -84,9 +90,14 @@ export const CATEGORIES: GameCategory[] = ((allGamesJson as any).data?.games || 
   const icon = categoryIconMap[enName] || getAssetUrl('images/cat-slots.webp');
 
   const games: GameItem[] = (cat.gameList || []).map((g: any, index: number) => {
-    const filename = g.img ? g.img.split('/').pop() : '';
-    const localImg = filename ? getAssetUrl(`images/games/${filename}`) : '';
-    const fallbackImg = g.img ? `https://maanwin2.com${g.img}` : '';
+    let localImg = '';
+    if (g.img && (g.img.startsWith('images/user_assets/') || g.img.startsWith('user_assets/'))) {
+      localImg = getAssetUrl(g.img.startsWith('/') ? g.img.slice(1) : g.img);
+    } else {
+      const filename = g.img ? g.img.split('/').pop() : '';
+      localImg = filename ? getAssetUrl(`images/games/${filename}`) : '';
+    }
+    const fallbackImg = g.img ? (g.img.startsWith('images/') ? getAssetUrl(g.img) : `https://maanwin2.com${g.img}`) : '';
 
     return {
       gameId: g.gameId || index,

@@ -23,6 +23,9 @@ export function BalanceCard({ onOpenAuth, onNavigateTab }: BalanceCardProps) {
   const mainPart = parts[0];
   const subPart = parts[1] ? `.${parts[1]}` : '.00';
 
+  const memberName = user?.user_metadata?.phone || user?.email?.split('@')[0] || 'Top Member';
+  const memberUid = user?.id ? user.id.slice(0, 5) : '60867';
+
   return (
     <section className="s11-balance side-distance s11-home__balance">
       <div className="s11-balance__info">
@@ -35,55 +38,53 @@ export function BalanceCard({ onOpenAuth, onNavigateTab }: BalanceCardProps) {
           />
         </div>
         <div className="s11-balance__text">
-          <p className="s11-balance__label">Your Balance</p>
-          <p className="s11-balance__amount">
-            {user ? (
-              <>
-                <span className="s11-balance__amount-main">₹ {mainPart}</span>
-                <span className="s11-balance__amount-sub">{subPart}</span>
-              </>
-            ) : (
-              <span className="s11-balance__amount-main">---</span>
-            )}
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span className="s11-balance__label" style={{ fontWeight: 700, fontSize: '0.36rem', color: '#fff' }}>
+              {user ? memberName : 'Top Member'}
+            </span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+            <span style={{ fontSize: '0.28rem', color: '#8898aa' }}>UID: {memberUid}</span>
+            <span style={{
+              background: 'linear-gradient(90deg, #ff8c00, #ff5722)',
+              color: '#fff',
+              fontSize: '0.22rem',
+              fontWeight: 700,
+              padding: '1px 6px',
+              borderRadius: '999px',
+              letterSpacing: '0.5px'
+            }}>
+              App VIP
+            </span>
+          </div>
         </div>
       </div>
 
       <div className="s11-balance__actions">
         {user ? (
-          <>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ textAlign: 'right', marginRight: '4px' }}>
+              <div style={{ fontSize: '0.24rem', color: '#8898aa' }}>Balance</div>
+              <div style={{ fontWeight: 700, color: '#f59e0b', fontSize: '0.34rem' }}>₹{mainPart}{subPart}</div>
+            </div>
             <button
               type="button"
               className="s11-balance__btn s11-balance__btn--primary"
               onClick={() => onNavigateTab('deposit')}
+              style={{ width: 'auto', padding: '0 0.4rem', height: '0.8rem' }}
             >
               Deposit
             </button>
-            <button
-              type="button"
-              className="s11-balance__btn s11-balance__btn--secondary"
-              onClick={() => onNavigateTab('withdraw')}
-            >
-              Withdraw
-            </button>
-          </>
+          </div>
         ) : (
-          <>
-            <button
-              type="button"
-              className="s11-balance__btn s11-balance__btn--primary"
-              onClick={() => onOpenAuth('signup')}
-            >
-              Register
-            </button>
-            <button
-              type="button"
-              className="s11-balance__btn s11-balance__btn--secondary"
-              onClick={() => onOpenAuth('login')}
-            >
-              Login
-            </button>
-          </>
+          <button
+            type="button"
+            className="s11-balance__btn s11-balance__btn--secondary"
+            onClick={() => onOpenAuth('login')}
+            style={{ minWidth: '2.2rem', height: '0.8rem', background: '#25354e', color: '#fff', border: '1px solid #374b6b' }}
+          >
+            Login
+          </button>
         )}
       </div>
     </section>

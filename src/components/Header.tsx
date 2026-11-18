@@ -1,7 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import { useAdminConfig } from '../context/AdminConfigContext';
 import { getAssetUrl } from '../utils/assetUrl';
-import { User as UserIcon, RotateCw } from 'lucide-react';
+import { User as UserIcon, RotateCw, Headset } from 'lucide-react';
 
 interface HeaderProps {
   onOpenAuth: (mode: 'login' | 'signup') => void;
@@ -13,7 +13,7 @@ interface HeaderProps {
 
 export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab, onOpenBell }: HeaderProps) {
   const { user } = useAuth();
-  const { getUserBalance } = useAdminConfig();
+  const { getUserBalance, config } = useAdminConfig();
 
   const userKey = user?.id || user?.user_metadata?.phone || user?.email;
   const balance = getUserBalance(userKey) || getUserBalance(user?.email) || getUserBalance(user?.id) || 0;
@@ -65,6 +65,26 @@ export function Header({ onOpenAuth, lang, onToggleLang, onNavigateTab, onOpenBe
             decoding="async"
           />
         </button>
+
+        {/* Headset / Customer Support Icon matching screenshot */}
+        <a
+          href={config.telegramUrl || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="s11-header__support-icon"
+          aria-label="Customer Support"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '0.72rem',
+            height: '0.72rem',
+            color: '#f59e0b',
+            textDecoration: 'none'
+          }}
+        >
+          <Headset size={20} />
+        </a>
 
         {/* Guest vs Logged In Actions */}
         {!user ? (
