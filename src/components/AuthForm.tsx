@@ -119,19 +119,20 @@ export function AuthForm() {
   };
 
   return (
-    <div className="auth-card">
-      {/* Brand Header */}
-      <div className="auth-header">
-        <div className="auth-logo-badge">
-          <Sparkles className="badge-icon" />
+    <div className="auth-wrapper">
+      <div className="auth-card">
+        {/* Brand Header */}
+        <div className="auth-header">
+          <div className="auth-logo-badge">
+            <Sparkles className="badge-icon" />
+          </div>
+          <h1 className="auth-title">Maanwin</h1>
+          <p className="auth-subtitle">
+            {mode === 'login' && 'Sign in to access your account'}
+            {mode === 'signup' && 'Create a new account to get started'}
+            {mode === 'forgot_password' && 'Reset your password via email'}
+          </p>
         </div>
-        <h1 className="auth-title">Maanwin Portal</h1>
-        <p className="auth-subtitle">
-          {mode === 'login' && 'Sign in to access your dashboard & services'}
-          {mode === 'signup' && 'Create your account to get started'}
-          {mode === 'forgot_password' && 'Reset your password'}
-        </p>
-      </div>
 
       {/* Switcher Tabs */}
       {mode !== 'forgot_password' && (
@@ -327,6 +328,12 @@ export function AuthForm() {
           </p>
         )}
       </div>
+
+      <div className="backend-badge">
+        <span className="status-dot"></span>
+        <span>Connected with Supabase</span>
+      </div>
     </div>
+  </div>
   );
 }
