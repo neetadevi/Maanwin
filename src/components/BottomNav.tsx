@@ -1,11 +1,36 @@
 import { useEffect, useRef } from 'react';
 import { getAssetUrl } from '../utils/assetUrl';
+import chestLayersData from '../data/chestLayers.json';
 
 interface BottomNavProps {
   activeTab: string;
   onSelectTab: (tab: string) => void;
   onOpenAuth: (mode: 'login' | 'signup') => void;
   isLoggedIn: boolean;
+}
+
+interface LayerItem {
+  box: number[];
+  src: number[];
+  t: number[];
+  o: number[];
+  rs: number[];
+}
+
+const chestLayers = chestLayersData as LayerItem[];
+const S = 3000;
+const X = 3.6;
+const J = 100;
+
+function interpolateProp(t: number[], n: number, s: number, c: number[]) {
+  const a = t.length / n;
+  let i = 0;
+  for (; i < a - 2 && t[(i + 1) * n] <= s; ) i++;
+  const r = i * n,
+    g = Math.min(i + 1, a - 1) * n,
+    _ = t[g] - t[r],
+    v = _ > 0 ? Math.min(Math.max((s - t[r]) / _, 0), 1) : 0;
+  for (let o = 1; o < n; o++) c[o - 1] = t[r + o] + (t[g + o] - t[r + o]) * v;
 }
 
 export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: BottomNavProps) {
@@ -17,42 +42,75 @@ export function BottomNav({ activeTab, onSelectTab, onOpenAuth, isLoggedIn }: Bo
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Sprite frames for the gold treasure chest opening & sparkling
-    const frames = [
-      { sx: 420, sy: 278, sw: 175, sh: 162 }, // Closed chest
-      { sx: 215, sy: 278, sw: 175, sh: 162 }, // Starting to open
-      { sx: 15, sy: 278, sw: 175, sh: 162 },  // Half open
-      { sx: 260, sy: 15, sw: 175, sh: 165 },  // Fully open with glowing gems
-      { sx: 460, sy: 15, sw: 175, sh: 165 },  // Sparkling
-      { sx: 660, sy: 15, sw: 175, sh: 165 }   // Radiant gold treasure
-    ];
-
-    let currentFrame = 0;
     let isMounted = true;
-    let timer: ReturnType<typeof setInterval> | null = null;
+    let animId = 0;
+    let l = 0;
+    let p = 0;
+    let imgLoaded = false;
+
+    const x = [0, 0];
+    const y = [0];
+    const w = [0, 0, 0];
 
     const img = new Image();
     img.src = getAssetUrl('images/s11_chest_anim-Bq793_Bz.webp');
 
-    const render = () => {
-      if (!ctx || !canvas) return;
-      const f = frames[currentFrame];
+    const render = (timeElapsed: number) => {
+      if (!ctx || !canvas || !imgLoaded || !canvas.width) return;
+      const s = (timeElapsed % S) / S;
+      const c = canvas.width / X;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, f.sx, f.sy, f.sw, f.sh, 0, 0, canvas.width, canvas.height);
+
+      for (let k = 0; k < chestLayers.length; k++) {
+        const a = chestLayers[k];
+        interpolateProp(a.o, 2, s, y);
+        if (y[0] <= 0.001) continue;
+        interpolateProp(a.t, 3, s, x);
+        interpolateProp(a.rs, 4, s, w);
+        const [i, r, g, _, v, o] = a.box;
+        const [H, N, q, D] = a.src;
+        ctx.globalAlpha = Math.min(y[0], 1);
+        ctx.setTransform(c, 0, 0, c, 0, 0);
+        ctx.translate(x[0] + i + v, x[1] + r + o);
+        ctx.rotate((w[0] * Math.PI) / 180);
+        ctx.scale(w[1], w[2]);
+        ctx.drawImage(img, H, N, q, D, -v, -o, g, _);
+      }
+    };
+
+    const loop = (timestamp: number) => {
+      if (!isMounted) return;
+      if (p) l += Math.min(timestamp - p, J);
+      p = timestamp;
+      render(l);
+      animId = requestAnimationFrame(loop);
+    };
+
+    const resize = () => {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 3);
+      if (rect.width > 0 && rect.height > 0) {
+        canvas.width = Math.round(rect.width * dpr);
+        canvas.height = Math.round(rect.height * dpr);
+      }
+      render(l);
     };
 
     img.onload = () => {
-      render();
-      timer = setInterval(() => {
-        if (!isMounted) return;
-        currentFrame = (currentFrame + 1) % frames.length;
-        render();
-      }, 500);
+      imgLoaded = true;
+      resize();
+      animId = requestAnimationFrame(loop);
     };
+
+    window.addEventListener('resize', resize);
 
     return () => {
       isMounted = false;
-      if (timer) clearInterval(timer);
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
     };
   }, []);
 
