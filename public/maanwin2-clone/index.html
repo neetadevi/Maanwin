@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Maanwin Movies - Cinema & Streaming Hub</title>
+  <meta name="description" content="Discover, stream and review the latest blockbuster movies and web series in 4K Ultra HD." />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <span class="brand-badge">4K</span>
+        <div class="brand-text">
+          <span class="brand-title">MAANWIN</span>
+          <span class="brand-sub">CINEMA HUB</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="header-btn" id="btn-search" title="Search Movies" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="header-btn" id="btn-notifications" title="Notifications" aria-label="Notifications">
+          <img src="./assets/icons/s11_icon_bell-BqXm-Mh1.svg" alt="" width="20" height="20" />
+          <span class="notify-dot"></span>
+        </button>
+        <button class="btn-vip" id="btn-vip-pass">
+          <span>VIP PASS</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport -->
+    <main class="main-content">
+      <!-- Search Overlay Bar (Hidden by default, toggled via search button) -->
+      <div class="search-bar-wrap" id="search-bar-wrap">
+        <div class="search-input-box">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="movie-search-input" placeholder="Search movies, actors, genres..." />
+          <button type="button" id="btn-clear-search" class="btn-clear-search">✕</button>
+        </div>
+      </div>
+
+      <!-- Banner Carousel Slider -->
+      <section class="banner-slider">
+        <div class="slider-track" id="slider-track">
+          <div class="slide active">
+            <img src="./assets/banners/banner1.svg" alt="Interstellar Odyssey" />
+          </div>
+          <div class="slide">
+            <img src="./assets/banners/banner2.svg" alt="Cyber City 2099" />
+          </div>
+          <div class="slide">
+            <img src="./assets/banners/banner3.svg" alt="Shadow of the Dragon" />
+          </div>
+        </div>
+        <div class="slider-dots" id="slider-dots">
+          <span class="dot active" data-index="0"></span>
+          <span class="dot" data-index="1"></span>
+          <span class="dot" data-index="2"></span>
+        </div>
+      </section>
+
+      <!-- Announcement / Marquee Notice Bar -->
+      <section class="notice-bar">
+        <div class="notice-horn">
+          <img src="./assets/icons/s11_notice_horn-C-8hsXzs.svg" alt="" width="18" height="18" />
+        </div>
+        <div class="notice-scroller">
+          <p class="notice-text">
+            🔥 Premiere Alert: "Interstellar Odyssey" & "Cyber City 2099" now streaming in 4K Dolby Atmos! • Daily VIP Free Passes credited at 12:00 PM • Join our Community for exclusive screenings!
+          </p>
+        </div>
+      </section>
+
+      <!-- Quick Action Cards (Daily Bonus / VIP Screenings) -->
+      <section class="quick-cards-grid">
+        <div class="quick-card card-gold" id="btn-daily-pass">
+          <div class="quick-icon">🎟️</div>
+          <div class="quick-info">
+            <h4>Daily Free Ticket</h4>
+            <p>Claim weekend cinema pass</p>
+          </div>
+          <button class="quick-arrow">→</button>
+        </div>
+        <div class="quick-card card-blue" id="btn-trending-wheel">
+          <div class="quick-icon">🎡</div>
+          <div class="quick-info">
+            <h4>Movie Wheel</h4>
+            <p>Spin & win free popcorn code</p>
+          </div>
+          <button class="quick-arrow">→</button>
+        </div>
+      </section>
+
+      <!-- Popular / Trending Now Scroller -->
+      <section class="popular-section">
+        <div class="section-header">
+          <div class="sec-title">
+            <span class="title-bar"></span>
+            <h3>🔥 Popular This Week</h3>
+          </div>
+          <a href="#category-nav" class="btn-see-more">View All →</a>
+        </div>
+        <div class="horizontal-scroll" id="trending-scroller">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+
+      <!-- Category Filter Tabs -->
+      <section class="category-nav-wrap" id="category-nav">
+        <div class="category-tabs">
+          <button class="cat-pill active" data-cat="all">⭐ All</button>
+          <button class="cat-pill" data-cat="Action">⚡ Action</button>
+          <button class="cat-pill" data-cat="Sci-Fi">🚀 Sci-Fi</button>
+          <button class="cat-pill" data-cat="Thriller">👁️ Thriller</button>
+          <button class="cat-pill" data-cat="Comedy">🎭 Comedy</button>
+          <button class="cat-pill" data-cat="Drama">🎬 Drama</button>
+          <button class="cat-pill" data-cat="Horror">🩸 Horror</button>
+          <button class="cat-pill" data-cat="Animation">✨ Animation</button>
+        </div>
+      </section>
+
+      <!-- Movie Grid Section -->
+      <section class="movie-grid-section">
+        <div class="grid-header">
+          <h3 id="current-category-title">Featured Releases</h3>
+          <span class="count-badge" id="movie-count">12 Titles</span>
+        </div>
+        <div class="movie-grid" id="movie-grid">
+          <!-- Populated via script.js -->
+        </div>
+      </section>
+
+      <!-- Spacer for bottom dock -->
+      <div style="height: 5rem;"></div>
+    </main>
+
+    <!-- Bottom Dock Navigation -->
+    <nav class="bottom-dock">
+      <i class="dock-backdrop"></i>
+      <i class="dock-glow"></i>
+      <img class="dock-bg-svg" src="./assets/icons/s11_tab_bg-Vd4rQYLh.svg" alt="" aria-hidden="true" />
+      
+      <div class="dock-items">
+        <div class="dock-side">
+          <button class="dock-item is-active" data-tab="home">
+            <img class="dock-icon" src="./assets/icons/s11_tab_home_sel-DZhrwbpl.svg" alt="" />
+            <span class="dock-text">Home</span>
+          </button>
+          <button class="dock-item" data-tab="trending">
+            <img class="dock-icon" src="./assets/icons/s11_tab_activity_nor-BtRJSqsp.svg" alt="" />
+            <span class="dock-text">Trending</span>
+          </button>
+        </div>
+
+        <div class="dock-side">
+          <button class="dock-item" data-tab="watchlist">
+            <img class="dock-icon" src="./assets/icons/s11_tab_wallet_nor-DbYvdA44.svg" alt="" />
+            <span class="dock-text">Watchlist</span>
+          </button>
+          <button class="dock-item" data-tab="profile">
+            <img class="dock-icon" src="./assets/icons/s11_tab_profile_nor-BL0XsIKW.svg" alt="" />
+            <span class="dock-text">Profile</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Center Floating Golden VIP Chest Button -->
+      <button class="dock-center-chest" id="btn-gold-chest" title="Claim VIP Pass & Rewards">
+        <img src="./assets/icons/s11_chest_anim-Bq793_Bz.webp" alt="Gold Bonus Chest" class="chest-img-anim" />
+        <span class="chest-badge">FREE</span>
+      </button>
+    </nav>
+
+    <!-- Movie Details & Trailer Modal -->
+    <div class="modal-backdrop" id="movie-modal">
+      <div class="modal-card">
+        <button class="btn-close-modal" id="btn-close-modal">✕</button>
+        <div class="modal-poster-wrap">
+          <img id="modal-poster-img" src="" alt="" />
+          <div class="play-overlay-btn" id="btn-play-trailer">
+            <span>▶</span>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="modal-title-row">
+            <h2 id="modal-title">Movie Title</h2>
+            <span class="modal-rating" id="modal-rating">★ 9.0</span>
+          </div>
+          <div class="modal-meta-row">
+            <span class="meta-tag" id="modal-genre">Sci-Fi</span>
+            <span class="meta-tag" id="modal-year">2026</span>
+            <span class="meta-tag ultra">4K UHD</span>
+            <span class="meta-tag dolby">DOLBY 5.1</span>
+          </div>
+          <p class="modal-desc" id="modal-desc">
+            Experience the thrilling cinematic journey with breathtaking visual effects, unforgettable storytelling, and award-winning performances.
+          </p>
+          <div class="modal-actions">
+            <button class="btn-primary-action" id="btn-modal-watch">▶ Watch Full Movie</button>
+            <button class="btn-secondary-action" id="btn-modal-watchlist">+ Add to Watchlist</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIP Pass / Bonus Popup Modal -->
+    <div class="modal-backdrop" id="vip-modal">
+      <div class="modal-card vip-card">
+        <button class="btn-close-modal" id="btn-close-vip">✕</button>
+        <div class="vip-header">
+          <div class="vip-icon-hero">👑</div>
+          <h2>MAANWIN VIP PASS</h2>
+          <p>Unlimited Streaming in 4K Ultra HD & Dolby Atmos</p>
+        </div>
+        <div class="vip-features-list">
+          <div class="feat-item">✓ Zero Advertisements & Instant Streaming</div>
+          <div class="feat-item">✓ Early Access to World Premieres</div>
+          <div class="feat-item">✓ Offline Downloads on Multiple Devices</div>
+          <div class="feat-item">✓ Daily Free Popcorn & Concession Vouchers</div>
+        </div>
+        <button class="btn-primary-action gold" id="btn-claim-vip">Claim 7-Day Free VIP Access</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

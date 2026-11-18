@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 280" width="100%" height="100%">
+    <defs>
+      <linearGradient id="bg-banner1.svg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#1E1B4B"/>
+        <stop offset="50%" stop-color="#4338CA"/>
+        <stop offset="100%" stop-color="#312E81"/>
+      </linearGradient>
+      <linearGradient id="overlay" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="rgba(15,20,33,0.95)"/>
+        <stop offset="60%" stop-color="rgba(15,20,33,0.3)"/>
+        <stop offset="100%" stop-color="rgba(15,20,33,0)"/>
+      </linearGradient>
+    </defs>
+    <rect width="700" height="280" rx="16" fill="url(#bg-banner1.svg)"/>
+    <circle cx="580" cy="90" r="140" fill="#F97316" opacity="0.2" filter="blur(40px)"/>
+    <rect width="700" height="280" rx="16" fill="url(#overlay)"/>
+    <rect x="24" y="24" width="160" height="26" rx="13" fill="rgba(0,0,0,0.5)" stroke="#F97316" stroke-width="1"/>
+    <text x="36" y="41" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="1">EXCLUSIVE PREMIERE • 4K ULTRA HD</text>
+    <text x="24" y="170" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="28" font-weight="900" letter-spacing="0.5">INTERSTELLAR ODYSSEY</text>
+    <text x="24" y="200" fill="#9CA3AF" font-family="system-ui, sans-serif" font-size="14" font-weight="500">The Voyage Beyond Known Stars</text>
+    <rect x="24" y="222" width="110" height="34" rx="17" fill="#F97316"/>
+    <text x="44" y="244" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="13" font-weight="800">▶ WATCH NOW</text>
+    <rect x="145" y="222" width="60" height="34" rx="17" fill="rgba(255,255,255,0.15)"/>
+    <text x="157" y="244" fill="#FBBF24" font-family="system-ui, sans-serif" font-size="12" font-weight="800">★ 9.4</text>
+  </svg>
