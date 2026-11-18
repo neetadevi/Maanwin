@@ -25,6 +25,10 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     /* Sparkle Burst Canvas */
     #dw-fx-canvas {
       position: fixed;
@@ -36,13 +40,11 @@
       z-index: 999999;
     }
 
-    /* Custom Cursor Enhancements */
+    /* Custom Cursor */
     body.custom-cursor {
       cursor: default;
     }
-    .custom-cursor__cursor {
-      pointer-events: none;
-    }
+    .custom-cursor__cursor,
     .custom-cursor__cursor-two {
       pointer-events: none;
     }
@@ -443,7 +445,7 @@ document.getElementById('dwIntro').remove();
 <div class="main-menu__wrapper-inner">
 <div class="main-menu__left">
 <div class="main-menu__logo">
-<a href="https://richind.org">
+<a href="#">
 <img src="https://richind.org/frontend/assets/images/logo.png"
 alt="RichInd-Logo" loading="lazy">
 </a>
@@ -452,7 +454,7 @@ alt="RichInd-Logo" loading="lazy">
 <div class="main-menu__main-menu-box">
 <div class="d-flex">
 <div class="mobile-login-btn d-block d-sm-none">
-<a href="https://richind.org/signin">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">
 <img src="https://richind.org/user_panel/assets/images/user.svg" alt=""
 class="injectable">
 </a>
@@ -461,52 +463,52 @@ class="injectable">
 </div>
 <ul class="main-menu__list">
 <li class="current">
-<a href="https://richind.org">Home</a>
+<a href="#">Home</a>
 </li>
 <li class="">
-<a href="https://richind.org/about">About</a>
+<a href="#about">About</a>
 </li>
 <li class="dropdown ">
-<a href="https://richind.org/plans">Plan</a>
+<a href="#plans">Plan</a>
 <ul class="shadow-box">
 <li>
-<a href="https://richind.org/plan/intermediate">Intermediate Package</a>
+<a href="#plans">Intermediate Package</a>
 </li>
 <li>
-<a href="https://richind.org/plan/expert">Expert Package</a>
+<a href="#plans">Expert Package</a>
 </li>
 <li>
-<a href="https://richind.org/plan/master">Master Package</a>
+<a href="#plans">Master Package</a>
 </li>
 <li>
-<a href="https://richind.org/plan/brahmastra">Brahmastra Package</a>
+<a href="#plans">Brahmastra Package</a>
 </li>
 <li>
-<a href="https://richind.org/plan/premium-pro">Premium Pro</a>
+<a href="#plans">Premium Pro</a>
 </li>
 <li>
-<a href="https://richind.org/plan/universal-prime">Universal Prime</a>
+<a href="#plans">Universal Prime</a>
 </li>
 </ul>
 </li>
 <li class="">
-<a href="https://richind.org/courses">Course</a>
+<a href="#courses">Course</a>
 </li>
 <li class="">
-<a href="https://richind.org/blogs">Blog</a>
+<a href="#video-reviews">Blog</a>
 </li>
 <li class="">
-<a href="https://richind.org/jobs">Jobs</a>
+<a href="#freelance">Jobs</a>
 </li>
 <li class="">
-<a href="https://richind.org/contact-us">Contact</a>
+<a href="#footer">Contact</a>
 </li>
 </ul>
 </div>
 <div class="main-menu__right">
 <div class="main-menu__btn-boxes">
 <div class="main-menu__btn-box-2">
-<a href="https://richind.org/signin" class="thm-btn"><i class="far fa-user"></i> Start
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="thm-btn"><i class="far fa-user"></i> Start
 Learning</a>
 </div>
 </div>
@@ -524,7 +526,7 @@ Learning</a>
 <div class="mobile-nav__content">
 <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
 <div class="logo-box">
-<a href="https://richind.org" aria-label="logo image">
+<a href="#" aria-label="logo image">
 <img src="https://richind.org/frontend/assets/images/logo.png" width="105"
 alt="RichInd-Logo" loading="lazy" />
 </a>
@@ -557,7 +559,7 @@ style="background-image: url(https://richind.org/backend/img/websitesetting/slid
 </div>
 </div>
 </section>
-<section class="about-one">
+<section class="about-one" id="about">
 <div class="container">
 <div class="row">
 <div class="col-xl-6">
@@ -606,7 +608,7 @@ educators who thrive through collaboration and innovation.
 </ul>
 <div class="about-one__btn-and-live-class">
 <div class="about-one__btn-box mb-3">
-<a href="https://richind.org/about" class="about-one__btn thm-btn"><i
+<a href="#about" class="about-one__btn thm-btn"><i
 class="far fa-chevron-double-right"></i>Know More</a>
 </div>
 </div>
@@ -662,7 +664,7 @@ alt="RichInd" loading="lazy">
 </div>
 </div>
 </section>
-<section class="courses-one">
+<section class="courses-one" id="plans">
 <div class="container">
 <div class="section-title text-center sec-title-animation animation-style1">
 <div class="section-title__tagline-box">
@@ -684,7 +686,7 @@ alt="Intermediate Package-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__title">
-<a href="https://richind.org/checkout?slug=intermediate">Intermediate Package</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signup')">Intermediate Package</a>
 </h3>
 <p class="plan-para"></p>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
@@ -718,7 +720,7 @@ alt="Intermediate Package-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box">
-<a href="https://richind.org/checkout?slug=intermediate"
+<a href="javascript:void(0)" onclick="openAuthModal('signup')"
 class="courses-one__btn thm-btn">
 <i class="far fa-chevron-double-right"></i>Buy Now
 </a>
@@ -739,7 +741,7 @@ alt="Expert Package-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__title">
-<a href="https://richind.org/checkout?slug=expert">Expert Package</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signup')">Expert Package</a>
 </h3>
 <p class="plan-para"></p>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
@@ -773,7 +775,7 @@ alt="Expert Package-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box">
-<a href="https://richind.org/checkout?slug=expert"
+<a href="javascript:void(0)" onclick="openAuthModal('signup')"
 class="courses-one__btn thm-btn">
 <i class="far fa-chevron-double-right"></i>Buy Now
 </a>
@@ -794,7 +796,7 @@ alt="Master Package-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__title">
-<a href="https://richind.org/checkout?slug=master">Master Package</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signup')">Master Package</a>
 </h3>
 <p class="plan-para"></p>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
@@ -828,7 +830,7 @@ alt="Master Package-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box">
-<a href="https://richind.org/checkout?slug=master"
+<a href="javascript:void(0)" onclick="openAuthModal('signup')"
 class="courses-one__btn thm-btn">
 <i class="far fa-chevron-double-right"></i>Buy Now
 </a>
@@ -849,7 +851,7 @@ alt="Brahmastra Package-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__title">
-<a href="https://richind.org/checkout?slug=brahmastra">Brahmastra Package</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signup')">Brahmastra Package</a>
 </h3>
 <p class="plan-para"></p>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
@@ -883,7 +885,7 @@ alt="Brahmastra Package-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box">
-<a href="https://richind.org/checkout?slug=brahmastra"
+<a href="javascript:void(0)" onclick="openAuthModal('signup')"
 class="courses-one__btn thm-btn">
 <i class="far fa-chevron-double-right"></i>Buy Now
 </a>
@@ -904,7 +906,7 @@ alt="Premium Pro-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__title">
-<a href="https://richind.org/checkout?slug=premium-pro">Premium Pro</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signup')">Premium Pro</a>
 </h3>
 <p class="plan-para"></p>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
@@ -938,7 +940,7 @@ alt="Premium Pro-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box">
-<a href="https://richind.org/checkout?slug=premium-pro"
+<a href="javascript:void(0)" onclick="openAuthModal('signup')"
 class="courses-one__btn thm-btn">
 <i class="far fa-chevron-double-right"></i>Buy Now
 </a>
@@ -959,7 +961,7 @@ alt="Universal Prime-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__title">
-<a href="https://richind.org/checkout?slug=universal-prime">Universal Prime</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signup')">Universal Prime</a>
 </h3>
 <p class="plan-para"></p>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
@@ -993,7 +995,7 @@ alt="Universal Prime-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box">
-<a href="https://richind.org/checkout?slug=universal-prime"
+<a href="javascript:void(0)" onclick="openAuthModal('signup')"
 class="courses-one__btn thm-btn">
 <i class="far fa-chevron-double-right"></i>Buy Now
 </a>
@@ -1007,7 +1009,7 @@ class="courses-one__btn thm-btn">
 </div>
 </section>
 <!-- Freelance CTA Start -->
-<section class="freelance-cta">
+<section class="freelance-cta" id="freelance">
 <div class="freelance-cta__inner">
 <div class="container">
 <div class="row align-items-center">
@@ -1026,7 +1028,7 @@ opportunities</li>
 experience</li>
 <li><i class="fas fa-check-circle"></i> Simple application, no hidden fees</li>
 </ul>
-<a href="https://richind.org/signin" class="thm-btn"><i
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="thm-btn"><i
 class="far fa-chevron-double-right"></i> Join as a Freelancer</a>
 </div>
 </div>
@@ -1059,7 +1061,7 @@ class="far fa-chevron-double-right"></i> Join as a Freelancer</a>
 </div>
 </section>
 <!-- Freelance CTA End -->
-<section class="courses-one">
+<section class="courses-one" id="courses">
 <div class="container">
 <div class="section-title text-center sec-title-animation animation-style1">
 <div class="section-title__tagline-box">
@@ -1080,7 +1082,7 @@ alt="Lead Generation-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/lead-generation-F1Sx">Lead Generation</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Lead Generation</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1090,7 +1092,7 @@ alt="Lead Generation-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/lead-generation-F1Sx" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1109,7 +1111,7 @@ alt="Instagram Mastery-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/instagram-growth-mastery-fmWL">Instagram Mastery</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Instagram Mastery</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1119,7 +1121,7 @@ alt="Instagram Mastery-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/instagram-growth-mastery-fmWL" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1138,7 +1140,7 @@ alt="Canva with A.I-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/canva-mastery-ZhY4">Canva with A.I</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Canva with A.I</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1148,7 +1150,7 @@ alt="Canva with A.I-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/canva-mastery-ZhY4" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1167,7 +1169,7 @@ alt="Capcut Video Editing-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/video-editing-course-lNJI">Capcut Video Editing</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Capcut Video Editing</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1177,7 +1179,7 @@ alt="Capcut Video Editing-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/video-editing-course-lNJI" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1196,7 +1198,7 @@ alt="Youtube Success-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/youtube-mastery-7RrJ">Youtube Success</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Youtube Success</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1206,7 +1208,7 @@ alt="Youtube Success-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/youtube-mastery-7RrJ" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1225,7 +1227,7 @@ alt="Google Adsense-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/google-adsense-DwBd">Google Adsense</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Google Adsense</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1235,7 +1237,7 @@ alt="Google Adsense-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/google-adsense-DwBd" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1254,7 +1256,7 @@ alt="Meta Facebook Ads-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/facebook-ads-x4jl">Meta Facebook Ads</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Meta Facebook Ads</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1264,7 +1266,7 @@ alt="Meta Facebook Ads-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/facebook-ads-x4jl" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1283,7 +1285,7 @@ alt="Communication Skills-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/google-adsense-7xiL">Communication Skills</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Communication Skills</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1293,7 +1295,7 @@ alt="Communication Skills-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/google-adsense-7xiL" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1312,7 +1314,7 @@ alt="Personal Branding-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/personality-development-cZ4v">Personal Branding</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Personal Branding</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1322,7 +1324,7 @@ alt="Personal Branding-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/personality-development-cZ4v" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1341,7 +1343,7 @@ alt="Public Speaking-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/public-speaking-QwUo">Public Speaking</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Public Speaking</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1351,7 +1353,7 @@ alt="Public Speaking-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/public-speaking-QwUo" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1370,7 +1372,7 @@ alt="Attraction Marketing-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/attraction-marketing-Uye3">Attraction Marketing</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Attraction Marketing</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1380,7 +1382,7 @@ alt="Attraction Marketing-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/attraction-marketing-Uye3" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1399,7 +1401,7 @@ alt="Win In Interview-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/win-in-interview-dDcW">Win In Interview</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Win In Interview</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1409,7 +1411,7 @@ alt="Win In Interview-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/win-in-interview-dDcW" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1428,7 +1430,7 @@ alt="Stock Market-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/stock-market-La9n">Stock Market</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Stock Market</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1438,7 +1440,7 @@ alt="Stock Market-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/stock-market-La9n" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1457,7 +1459,7 @@ alt="Website design-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/java-GlBf">Website design</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Website design</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1467,7 +1469,7 @@ alt="Website design-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/java-GlBf" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1486,7 +1488,7 @@ alt="English Speaking-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/english-speaking-em6h">English Speaking</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">English Speaking</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1496,7 +1498,7 @@ alt="English Speaking-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/english-speaking-em6h" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1515,7 +1517,7 @@ alt="Crypto Currency-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/crypto-currency-eofU">Crypto Currency</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Crypto Currency</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1525,7 +1527,7 @@ alt="Crypto Currency-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/crypto-currency-eofU" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1544,7 +1546,7 @@ alt="MS-EXCEL-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/ms-excel-JDPp">MS-EXCEL</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">MS-EXCEL</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1554,7 +1556,7 @@ alt="MS-EXCEL-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/ms-excel-JDPp" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1573,7 +1575,7 @@ alt="Artificial intelligence (A.I) Course-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/artificial-intelligence-%28a.i%29-course-Us7D">Artificial intelligence (A.I) Course</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Artificial intelligence (A.I) Course</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1583,7 +1585,7 @@ alt="Artificial intelligence (A.I) Course-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/artificial-intelligence-%28a.i%29-course-Us7D" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1602,7 +1604,7 @@ alt="Step to Success-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/step-to-success-OsVe">Step to Success</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Step to Success</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1615,7 +1617,7 @@ style="color: #FFC224;"></span>(5 Review)</p>
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/step-to-success-OsVe" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1634,7 +1636,7 @@ alt="10 LAKH ROADMAP-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/10-lakh-roadmap-lM3f">10 LAKH ROADMAP</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">10 LAKH ROADMAP</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1647,7 +1649,7 @@ style="color: #FFC224;"></span>(5 Review)</p>
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/10-lakh-roadmap-lM3f" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1666,7 +1668,7 @@ alt="Freelancing Series-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/freelancing-series-w5xY">Freelancing Series</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Freelancing Series</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1681,7 +1683,7 @@ Student</p>
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/freelancing-series-w5xY" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1700,7 +1702,7 @@ alt="Premiere Pro-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/premier-pro-3Nq5">Premiere Pro</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Premiere Pro</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1710,7 +1712,7 @@ alt="Premiere Pro-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/premier-pro-3Nq5" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1729,7 +1731,7 @@ alt="1 Crore Sales Masterplan-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/1-crore-sales-masterplan-IXwu">1 Crore Sales Masterplan</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">1 Crore Sales Masterplan</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1739,7 +1741,7 @@ alt="1 Crore Sales Masterplan-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/1-crore-sales-masterplan-IXwu" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1758,7 +1760,7 @@ alt="Instagram Growth Masterplan-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/instagram-growth-masterplan-ypPT">Instagram Growth Masterplan</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Instagram Growth Masterplan</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1768,7 +1770,7 @@ alt="Instagram Growth Masterplan-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/instagram-growth-masterplan-ypPT" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1787,7 +1789,7 @@ alt="Dropshipping Business-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/dropshipping-business-MvMc">Dropshipping Business</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Dropshipping Business</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1797,7 +1799,7 @@ alt="Dropshipping Business-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/dropshipping-business-MvMc" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1816,7 +1818,7 @@ alt="E-Commerce Business-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/e-commerce-business-SVVR">E-Commerce Business</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">E-Commerce Business</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1826,7 +1828,7 @@ alt="E-Commerce Business-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/e-commerce-business-SVVR" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1845,7 +1847,7 @@ alt="Adobe Photoshop-Image" loading="lazy">
 </div>
 <div class="courses-one__content">
 <h3 class="courses-one__titles">
-<a href="https://richind.org/course/adobe-photoshop-kmNx">Adobe Photoshop</a>
+<a href="javascript:void(0)" onclick="openAuthModal('signin')">Adobe Photoshop</a>
 </h3>
 <ul class="plans-two__meta list-unstyled d-flex justify-content-between">
 <li>
@@ -1855,7 +1857,7 @@ alt="Adobe Photoshop-Image" loading="lazy">
 </ul>
 <div class="courses-one__btn-and-doller-box">
 <div class="courses-one__btn-box w-100">
-<a href="https://richind.org/course/adobe-photoshop-kmNx" class="w-100 thm-btn p-2">
+<a href="javascript:void(0)" onclick="openAuthModal('signin')" class="w-100 thm-btn p-2">
 <i class="far fa-chevron-double-right"></i>View Details
 </a>
 </div>
@@ -1901,7 +1903,7 @@ Partners
 <img src="https://richind.org/frontend/assets/images/icon/why-choose-two-icon-1.png"
 alt="RichInd" loading="lazy">
 </div>
-<h3 class="why-choose-two__title"><a href="https://richind.org/about">Structured
+<h3 class="why-choose-two__title"><a href="#about">Structured
 Learning <br>
 Paths for Every Goal</a></h3>
 <ul class="list-unstyled why-choose-two__points">
@@ -1930,7 +1932,7 @@ alt="RichInd" loading="lazy">
 <img src="https://richind.org/frontend/assets/images/icon/why-choose-two-icon-2.png"
 alt="RichInd" loading="lazy">
 </div>
-<h3 class="why-choose-two__title"><a href="https://richind.org/about">A Supportive
+<h3 class="why-choose-two__title"><a href="#about">A Supportive
 Learner <br>
 Community Awaits</a></h3>
 <ul class="list-unstyled why-choose-two__points">
@@ -1963,7 +1965,7 @@ and <br> never learn alone.</p>
 <img src="https://richind.org/frontend/assets/images/icon/why-choose-two-icon-3.png"
 alt="RichInd" loading="lazy">
 </div>
-<h3 class="why-choose-two__title"><a href="https://richind.org/about">Real-Time
+<h3 class="why-choose-two__title"><a href="#about">Real-Time
 Progress
 <br> Tracking & Reports</a></h3>
 <ul class="list-unstyled why-choose-two__points">
@@ -2198,7 +2200,7 @@ data-speed="1500">00</h3>
 </div>
 </div>
 </section>
-<section class="team-details">
+<section class="team-details" id="founder">
 <div class="container">
 <div class="row">
 <div class="col-xl-6 d-flex flex-column justify-content-center align-items-center">
@@ -2239,7 +2241,7 @@ social media marketing in this company.</p>
 </div>
 </div>
 </section>
-<section class="team-one">
+<section class="team-one" id="team">
 <div class="team-one__shape-1 shapemover">
 <img src="https://richind.org/frontend/assets/images/shapes/team-one-shape-1.png" alt="RichInd"
 loading="lazy">
@@ -2570,7 +2572,7 @@ href="mailto:info@richind.org">info@richind.org</a>
 </div>
 </div>
 </section>
-<section class="blog-one">
+<section class="blog-one" id="video-reviews">
 <div class="container">
 <div class="section-title text-center sec-title-animation animation-style1">
 <div class="section-title__tagline-box">
@@ -2707,7 +2709,7 @@ referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 </div>
 </section>
-<section class="testimonial-one">
+<section class="testimonial-one" id="testimonials">
 <div class="container">
 <div class="section-title text-left sec-title-animation animation-style2">
 <div class="section-title__tagline-box">
@@ -2944,7 +2946,7 @@ alt="RichInd" loading="lazy">
 </div>
 </div>
 </section>
-<section class="faq-page">
+<section class="faq-page" id="faq">
 <div class="container">
 <div class="section-title text-center sec-title-animation animation-style1">
 <div class="section-title__tagline-box">
@@ -2985,7 +2987,7 @@ alt="RichInd" loading="lazy">
 </div>
 <div class="accrodion-content">
 <div class="inner">
-<p><div class="panel_list" style="float: left; width: 100%; margin-bottom: 15px; font-family: 'Gordita', sans-serif;"><div class="panel_para" style="padding: 18px 15px 10px;">To sign up for Richind, visit our website at <a href="http://www.richind.com/" target="_new" style="border: 0px solid rgb(217, 217, 227); --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgba(69,89,164,.5); --tw-ring-offset-shadow: 0 0 transparent; --tw-ring-shadow: 0 0 transparent; --tw-shadow: 0 0 transparent; --tw-shadow-colored: 0 0 transparent; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; text-underline-offset: 2px;">www.richind.</a>in&nbsp;and click on the "Sign Up" or "Register" button. Follow the registration process, which typically includes providing your name, email address, and creating a password. Once registered, you can explore and enroll in courses.<br></div></div></p>
+<p><div class="panel_list" style="float: left; width: 100%; margin-bottom: 15px; font-family: 'Gordita', sans-serif;"><div class="panel_para" style="padding: 18px 15px 10px;">To sign up for Richind, visit our website at <a href="#" target="_new" style="border: 0px solid rgb(217, 217, 227); --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgba(69,89,164,.5); --tw-ring-offset-shadow: 0 0 transparent; --tw-ring-shadow: 0 0 transparent; --tw-shadow: 0 0 transparent; --tw-shadow-colored: 0 0 transparent; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; text-underline-offset: 2px;">www.richind.</a>in&nbsp;and click on the "Sign Up" or "Register" button. Follow the registration process, which typically includes providing your name, email address, and creating a password. Once registered, you can explore and enroll in courses.<br></div></div></p>
 </div>
 </div>
 </div>
@@ -3005,14 +3007,14 @@ alt="RichInd" loading="lazy">
 </div>
 </div>
 </section>
-<footer class="site-footer">
+<footer class="site-footer" id="footer">
 <div class="site-footer__shape-bg" style="background-image: url(https://richind.org/frontend/assets/images/shapes/site-footer-shape-bg.png);"></div>
 <div class="site-footer__logo-and-contact-box">
 <div class="container">
 <div class="site-footer__logo-and-contact-box-inner">
 <div class="site-footer__logo-box wow fadeInLeft" data-wow-delay="100ms">
 <div class="site-footer__logo">
-<a href="https://richind.org">
+<a href="#">
 <img src="https://richind.org/frontend/assets/images/logo.png" alt="RichInd-Logo" loading="lazy">
 </a>
 </div>
@@ -3021,7 +3023,7 @@ RichInd is an E-learning platform.<br> This platform helps people to make their 
 </p>
 </div>
 <div class="site-footer__contact-box wow fadeInRight" data-wow-delay="100ms">
-<a href="https://richind.org/contact-us">Contact Us</a>
+<a href="#footer">Contact Us</a>
 </div>
 </div>
 </div>
@@ -3097,25 +3099,25 @@ RichInd is an E-learning platform.<br> This platform helps people to make their 
 <h4 class="site-footer__title">Quick Link</h4>
 <ul class="site-footer__links-list list-unstyled">
 <li>
-<a href="https://richind.org">
+<a href="#">
 <span class="far fa-plus"></span>
 Home
 </a>
 </li>
 <li>
-<a href="https://richind.org/about">
+<a href="#about">
 <span class="far fa-plus"></span>
 About Us
 </a>
 </li>
 <li>
-<a href="https://richind.org/courses">
+<a href="#courses">
 <span class="far fa-plus"></span>
 Courses
 </a>
 </li>
 <li>
-<a href="https://richind.org/contact-us">
+<a href="#footer">
 <span class="far fa-plus"></span>
 Contact
 </a>
@@ -3127,9 +3129,9 @@ Contact
 <div class="site-footer__useful-links">
 <h4 class="site-footer__title">Useful Links</h4>
 <ul class="site-footer__links-list list-unstyled">
-<li><a href="https://richind.org/privacy-policy"> <span class="far fa-plus"></span> Privacy & Policy</a></li>
-<li><a href="https://richind.org/term-and-condition"> <span class="far fa-plus"></span> Terms & Condition</a></li>
-<li><a href="https://richind.org/cancel-and-refund-policy"> <span class="far fa-plus"></span> Refund Policy</a></li>
+<li><a href="#footer"> <span class="far fa-plus"></span> Privacy & Policy</a></li>
+<li><a href="#footer"> <span class="far fa-plus"></span> Terms & Condition</a></li>
+<li><a href="#footer"> <span class="far fa-plus"></span> Refund Policy</a></li>
 </ul>
 </div>
 </div>
@@ -3375,7 +3377,7 @@ y.parentNode.insertBefore(t, y);
           p.x += p.vx * step;
           p.y += p.vy * step;
           p.vx *= Math.pow(0.97, step);
-          p.vy = p.vy * Math.pow(0.97, step) + 0.04 * step; // gravity
+          p.vy = p.vy * Math.pow(0.97, step) + 0.04 * step;
           p.life -= p.decay * step;
           p.rotation += p.rotSpeed * step;
 
@@ -3403,7 +3405,6 @@ y.parentNode.insertBefore(t, y);
 
       // CLICK / TAP BURST ANIMATION
       window.addEventListener('pointerdown', function(e) {
-        // Emit 25 sparkling stars in a burst
         for (var i = 0; i < 25; i++) {
           sparkle(e.clientX, e.clientY, {
             speed: 4.8,
@@ -3418,7 +3419,7 @@ y.parentNode.insertBefore(t, y);
       var lx = 0, ly = 0;
       window.addEventListener('pointermove', function(e) {
         var dx = e.clientX - lx, dy = e.clientY - ly;
-        if (dx * dx + dy * dy < 120) return; // a sparkle every ~11px
+        if (dx * dx + dy * dy < 120) return;
         lx = e.clientX;
         ly = e.clientY;
         sparkle(e.clientX, e.clientY, { speed: 1.2, size: 2.5 + Math.random() * 3 });
@@ -3482,7 +3483,44 @@ y.parentNode.insertBefore(t, y);
         parent.toggleClass('active').siblings('.accrodion').removeClass('active');
       });
 
-      // 6. Owl Carousels Initializers
+      // 6. Global Link Interceptor (Guarantees user NEVER leaves your site to richind.org)
+      document.addEventListener('click', function(e) {
+        var a = e.target.closest('a');
+        if (!a) return;
+        var href = a.getAttribute('href');
+        if (!href) return;
+
+        // If link targets richind.org or richind.com
+        if (href.includes('richind.org') || href.includes('richind.com')) {
+          // If it's not a direct asset file download
+          if (!href.match(/\.(css|js|png|jpg|jpeg|webp|svg|ico|pdf|zip)$/i)) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (href.includes('signin') || href.includes('user')) {
+              openAuthModal('signin');
+            } else if (href.includes('checkout') || href.includes('buy') || href.includes('plan')) {
+              openAuthModal('signup');
+            } else if (href.includes('about')) {
+              var el = document.getElementById('about');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else if (href.includes('course')) {
+              var el = document.getElementById('courses');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else if (href.includes('jobs')) {
+              var el = document.getElementById('freelance');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else if (href.includes('contact')) {
+              var el = document.getElementById('footer');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }
+        }
+      }, true);
+
+      // 7. Owl Carousels Initializers
       $(document).ready(function() {
         if ($('.courses-one__carousel').length) {
           $('.courses-one__carousel').owlCarousel({
@@ -3531,12 +3569,6 @@ y.parentNode.insertBefore(t, y);
         $('.scroll-to-target').on('click', function(e) {
           e.preventDefault();
           $('html, body').animate({ scrollTop: 0 }, 600);
-        });
-
-        // Wire up Start Learning and Buy Now buttons to Supabase Modal
-        $('a[href*="signin"], a[href*="checkout"], .mobile-login-btn a').on('click', function(e) {
-          e.preventDefault();
-          openAuthModal($(this).attr('href').includes('checkout') ? 'signup' : 'signin');
         });
       });
     })();

@@ -13,12 +13,52 @@ html = html.replace(
   'style="float: left; width: 100%; margin-bottom: 15px; font-family: \'Gordita\', sans-serif;"'
 );
 
-// 3. Ensure Supabase JS client and modal CSS are added in head
+// 3. Replace all navigation hrefs pointing to richind.org with internal section links or modal triggers
+// Leave stylesheets, scripts, and image src pointing to richind.org intact!
+html = html.replace(/href="https:\/\/richind\.org\/signin"/g, 'href="javascript:void(0)" onclick="openAuthModal(\'signin\')"');
+html = html.replace(/href="https:\/\/richind\.org\/about"/g, 'href="#about"');
+html = html.replace(/href="https:\/\/richind\.org\/plans"/g, 'href="#plans"');
+html = html.replace(/href="https:\/\/richind\.org\/plan\/[^"]*"/g, 'href="#plans"');
+html = html.replace(/href="https:\/\/richind\.org\/courses"/g, 'href="#courses"');
+html = html.replace(/href="https:\/\/richind\.org\/blogs"/g, 'href="#video-reviews"');
+html = html.replace(/href="https:\/\/richind\.org\/jobs"/g, 'href="#freelance"');
+html = html.replace(/href="https:\/\/richind\.org\/contact-us"/g, 'href="#footer"');
+html = html.replace(/href="https:\/\/richind\.org\/checkout[^"]*"/g, 'href="javascript:void(0)" onclick="openAuthModal(\'signup\')"');
+html = html.replace(/href="https:\/\/richind\.org\/course\/[^"]*"/g, 'href="javascript:void(0)" onclick="openAuthModal(\'signin\')"');
+html = html.replace(/href="https:\/\/richind\.org\/privacy-policy"/g, 'href="#footer"');
+html = html.replace(/href="https:\/\/richind\.org\/term-and-condition"/g, 'href="#footer"');
+html = html.replace(/href="https:\/\/richind\.org\/cancel-and-refund-policy"/g, 'href="#footer"');
+html = html.replace(/href="https:\/\/richind\.org\/?["']/g, 'href="#"');
+html = html.replace(/href="http:\/\/www\.richind\.com\/?["']/g, 'href="#"');
+html = html.replace(/href="http:\/\/www\.richind\.org\/?["']/g, 'href="#"');
+
+// Add section IDs for smooth in-page navigation
+html = html.replace(/class="about-one"/, 'class="about-one" id="about"');
+html = html.replace(/class="freelance-cta"/, 'class="freelance-cta" id="freelance"');
+html = html.replace(/class="team-details"/, 'class="team-details" id="founder"');
+html = html.replace(/class="team-one"/, 'class="team-one" id="team"');
+html = html.replace(/class="blog-one"/, 'class="blog-one" id="video-reviews"');
+html = html.replace(/class="testimonial-one"/, 'class="testimonial-one" id="testimonials"');
+html = html.replace(/class="faq-page"/, 'class="faq-page" id="faq"');
+html = html.replace(/class="site-footer"/, 'class="site-footer" id="footer"');
+
+// Differentiate the two courses-one sections: first is #plans, second is #courses
+let courseCount = 0;
+html = html.replace(/class="courses-one"/g, (match) => {
+  courseCount++;
+  return courseCount === 1 ? 'class="courses-one" id="plans"' : 'class="courses-one" id="courses"';
+});
+
+// 4. Injections into head
 const headInjections = `
   <!-- Supabase JS Client CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     /* Sparkle Burst Canvas */
     #dw-fx-canvas {
       position: fixed;
@@ -30,13 +70,11 @@ const headInjections = `
       z-index: 999999;
     }
 
-    /* Custom Cursor Enhancements */
+    /* Custom Cursor */
     body.custom-cursor {
       cursor: default;
     }
-    .custom-cursor__cursor {
-      pointer-events: none;
-    }
+    .custom-cursor__cursor,
     .custom-cursor__cursor-two {
       pointer-events: none;
     }
@@ -208,7 +246,7 @@ const headInjections = `
 
 html = html.replace('</head>', headInjections);
 
-// 4. Modal HTML Markup to append before </body>
+// 5. Modal HTML Markup and Scripts
 const modalAndFxMarkup = `
   <!-- Supabase Auth Modal -->
   <div class="sb-modal-backdrop" id="sbModalBackdrop" onclick="handleBackdropClick(event)">
@@ -318,7 +356,7 @@ const modalAndFxMarkup = `
           p.x += p.vx * step;
           p.y += p.vy * step;
           p.vx *= Math.pow(0.97, step);
-          p.vy = p.vy * Math.pow(0.97, step) + 0.04 * step; // gravity
+          p.vy = p.vy * Math.pow(0.97, step) + 0.04 * step;
           p.life -= p.decay * step;
           p.rotation += p.rotSpeed * step;
 
@@ -346,7 +384,6 @@ const modalAndFxMarkup = `
 
       // CLICK / TAP BURST ANIMATION
       window.addEventListener('pointerdown', function(e) {
-        // Emit 25 sparkling stars in a burst
         for (var i = 0; i < 25; i++) {
           sparkle(e.clientX, e.clientY, {
             speed: 4.8,
@@ -361,7 +398,7 @@ const modalAndFxMarkup = `
       var lx = 0, ly = 0;
       window.addEventListener('pointermove', function(e) {
         var dx = e.clientX - lx, dy = e.clientY - ly;
-        if (dx * dx + dy * dy < 120) return; // a sparkle every ~11px
+        if (dx * dx + dy * dy < 120) return;
         lx = e.clientX;
         ly = e.clientY;
         sparkle(e.clientX, e.clientY, { speed: 1.2, size: 2.5 + Math.random() * 3 });
@@ -425,7 +462,44 @@ const modalAndFxMarkup = `
         parent.toggleClass('active').siblings('.accrodion').removeClass('active');
       });
 
-      // 6. Owl Carousels Initializers
+      // 6. Global Link Interceptor (Guarantees user NEVER leaves your site to richind.org)
+      document.addEventListener('click', function(e) {
+        var a = e.target.closest('a');
+        if (!a) return;
+        var href = a.getAttribute('href');
+        if (!href) return;
+
+        // If link targets richind.org or richind.com
+        if (href.includes('richind.org') || href.includes('richind.com')) {
+          // If it's not a direct asset file download
+          if (!href.match(/\\.(css|js|png|jpg|jpeg|webp|svg|ico|pdf|zip)$/i)) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (href.includes('signin') || href.includes('user')) {
+              openAuthModal('signin');
+            } else if (href.includes('checkout') || href.includes('buy') || href.includes('plan')) {
+              openAuthModal('signup');
+            } else if (href.includes('about')) {
+              var el = document.getElementById('about');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else if (href.includes('course')) {
+              var el = document.getElementById('courses');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else if (href.includes('jobs')) {
+              var el = document.getElementById('freelance');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else if (href.includes('contact')) {
+              var el = document.getElementById('footer');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }
+        }
+      }, true);
+
+      // 7. Owl Carousels Initializers
       $(document).ready(function() {
         if ($('.courses-one__carousel').length) {
           $('.courses-one__carousel').owlCarousel({
@@ -474,12 +548,6 @@ const modalAndFxMarkup = `
         $('.scroll-to-target').on('click', function(e) {
           e.preventDefault();
           $('html, body').animate({ scrollTop: 0 }, 600);
-        });
-
-        // Wire up Start Learning and Buy Now buttons to Supabase Modal
-        $('a[href*="signin"], a[href*="checkout"], .mobile-login-btn a').on('click', function(e) {
-          e.preventDefault();
-          openAuthModal($(this).attr('href').includes('checkout') ? 'signup' : 'signin');
         });
       });
     })();
@@ -596,4 +664,4 @@ if (!fs.existsSync(pubRichindDir)) fs.mkdirSync(pubRichindDir, { recursive: true
 fs.writeFileSync(path.resolve(__dirname, '../public/richind.html'), html, 'utf-8');
 fs.writeFileSync(path.resolve(pubRichindDir, 'index.html'), html, 'utf-8');
 
-console.log('Successfully built and updated all RichInd HTML files!');
+console.log('Successfully re-built RichInd HTML with internal link mappings!');
